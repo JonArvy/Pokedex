@@ -1,6 +1,6 @@
 package sz.sapphirex.pokedex.domain.model
 
-import sz.sapphirex.pokedex.domain.ApplicationLogger
+import sz.sapphirex.pokedex.domain.utils.ApplicationLogger
 import java.lang.Exception
 
 sealed class DataResult<out T> {

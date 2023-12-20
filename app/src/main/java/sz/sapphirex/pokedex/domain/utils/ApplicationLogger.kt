@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.domain
+package sz.sapphirex.pokedex.domain.utils
 
 import android.util.Log
 

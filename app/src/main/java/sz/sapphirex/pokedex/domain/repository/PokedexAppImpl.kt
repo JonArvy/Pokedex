@@ -1,16 +1,16 @@
 package sz.sapphirex.pokedex.domain.repository
 
-import kek.dex.pokedex.data.api.RawPokeApi
+import kek.dex.pokedex.data.api.PokeApi
 import sz.sapphirex.pokedex.domain.model.DataResult
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import sz.sapphirex.pokedex.data.api.ApiEndpoints.ENDPOINT_POKEMON
-import sz.sapphirex.pokedex.data.room.PokemonDao
+import sz.sapphirex.pokedex.data.database.PokemonDao
 
 class PokedexAppImpl(
-    private val pokeApi: RawPokeApi,
+    private val pokeApi: PokeApi,
     private val dao: PokemonDao
 ): PokedexRepository {
     override fun getPokemon(): Flow<DataResult<List<Pokemon>>> = flow {

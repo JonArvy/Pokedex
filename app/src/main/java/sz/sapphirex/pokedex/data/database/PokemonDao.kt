@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.data.room
+package sz.sapphirex.pokedex.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

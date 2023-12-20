@@ -1,6 +1,8 @@
-package sz.sapphirex.pokedex.data.room
+package sz.sapphirex.pokedex.data.database
 
 import androidx.room.TypeConverter
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonAbility
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonHeldItem
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonMove
@@ -9,9 +11,7 @@ import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonStat
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonTypePast
 import sz.sapphirex.pokedex.domain.model.base.pokemon.VersionGameIndex
-import sz.sapphirex.pokedex.domain.model.base.utility.commonmodels.NamedAPIResource
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
 
 class Converters {
     @TypeConverter
