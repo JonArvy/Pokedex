@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex
+package sz.sapphirex.pokedex.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

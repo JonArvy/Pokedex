@@ -12,8 +12,8 @@ import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 class Pokedex(private val context: Context) {
 //    private val pokeApi = PokeApi()
 
-    private val database: PokemonDatabase = Room.databaseBuilder(context, PokemonDatabase::class.java, "app_database").build()
-    private val pokemonDao: PokemonDao = database.pokemonDao()
+//    private val database: PokemonDatabase = Room.databaseBuilder(context, PokemonDatabase::class.java, "app_database").build()
+//    private val pokemonDao: PokemonDao = database.pokemonDao()
 
     private var currentLoadedPage: String = ""
     /**
@@ -83,25 +83,25 @@ class Pokedex(private val context: Context) {
      * Todo: Should it return pair? Pair<List<Pokemon>>, String(endpoint)>?
      * So i can return which specific endpoint and continue loading from that endpoint?
      * */
-    @Deprecated("Migration with flow usage in PokedexRepository")
-    private suspend fun checkUpUntilCached(
-        endpoint: String = ENDPOINT_POKEMON,
-        accumulator: List<Pokemon> = emptyList()
-    ): Pair<List<Pokemon>, String> {
-        val named = pokemonDao.getNamed(endpoint)
-        return if (named != null) {
-            val updatedList = accumulator.toMutableList()
-            for (result in named.results) {
-                val pokemon = pokemonDao.getPokemon(result.name)
-                if (pokemon != null) {
-                    updatedList.add(pokemon)
-                }
-            }
-            named.next?.let { checkUpUntilCached(it, updatedList) } ?: Pair(updatedList.toList(), endpoint)
-        } else {
-            Pair(accumulator.toList(), endpoint)
-        }
-    }
+//    @Deprecated("Migration with flow usage in PokedexRepository")
+//    private suspend fun checkUpUntilCached(
+//        endpoint: String = ENDPOINT_POKEMON,
+//        accumulator: List<Pokemon> = emptyList()
+//    ): Pair<List<Pokemon>, String> {
+//        val named = pokemonDao.getNamed(endpoint)
+//        return if (named != null) {
+//            val updatedList = accumulator.toMutableList()
+//            for (result in named.results) {
+//                val pokemon = pokemonDao.getPokemon(result.name)
+//                if (pokemon != null) {
+//                    updatedList.add(pokemon)
+//                }
+//            }
+//            named.next?.let { checkUpUntilCached(it, updatedList) } ?: Pair(updatedList.toList(), endpoint)
+//        } else {
+//            Pair(accumulator.toList(), endpoint)
+//        }
+//    }
 
     // Main Function
 //    @Deprecated("Migration with flow usage in PokedexRepository")
@@ -180,7 +180,7 @@ class Pokedex(private val context: Context) {
      * */
 
 
-    suspend fun trainingGrounds(): DataResult<List<Pokemon>> {
-        return pokemonDao.getAllPokemon()?.let { DataResult.Success(it) } ?: DataResult.Success(emptyList())
-    }
+//    suspend fun trainingGrounds(): DataResult<List<Pokemon>> {
+//        return pokemonDao.getAllPokemon()?.let { DataResult.Success(it) } ?: DataResult.Success(emptyList())
+//    }
 }
