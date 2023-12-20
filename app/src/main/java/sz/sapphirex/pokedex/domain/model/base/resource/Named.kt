@@ -2,8 +2,8 @@ package sz.sapphirex.pokedex.domain.model.base.resource
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import sz.sapphirex.pokedex.domain.model.base.utility.commonmodels.NamedAPIResource
 import kotlinx.serialization.Serializable
+import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
 
 @Serializable
 @Entity(tableName = "named")

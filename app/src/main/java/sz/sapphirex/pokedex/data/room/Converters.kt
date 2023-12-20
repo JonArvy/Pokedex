@@ -1,16 +1,15 @@
 package sz.sapphirex.pokedex.data.room
 
 import androidx.room.TypeConverter
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonAbility
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonHeldItem
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonMove
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonSprites
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonStat
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonType
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.PokemonTypePast
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.VersionGameIndex
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonAbility
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonHeldItem
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonMove
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonSprites
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonStat
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonTypePast
+import sz.sapphirex.pokedex.domain.model.base.pokemon.VersionGameIndex
 import sz.sapphirex.pokedex.domain.model.base.utility.commonmodels.NamedAPIResource
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

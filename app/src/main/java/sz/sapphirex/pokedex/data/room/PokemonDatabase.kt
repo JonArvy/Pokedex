@@ -3,7 +3,7 @@ package sz.sapphirex.pokedex.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 
 @Database(

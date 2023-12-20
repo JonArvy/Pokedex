@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 import sz.sapphirex.pokedex.domain.ApplicationLogger.Companion.apiLogger
 import sz.sapphirex.pokedex.domain.model.ApiResult
 import sz.sapphirex.pokedex.domain.model.base.pokemon.abilities.Ability
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemonspecies.PokemonSpecies
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 

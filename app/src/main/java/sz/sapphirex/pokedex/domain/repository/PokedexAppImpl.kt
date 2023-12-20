@@ -2,7 +2,7 @@ package sz.sapphirex.pokedex.domain.repository
 
 import kek.dex.pokedex.data.api.RawPokeApi
 import sz.sapphirex.pokedex.domain.model.DataResult
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

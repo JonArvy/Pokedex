@@ -7,7 +7,7 @@ import sz.sapphirex.pokedex.data.api.PokeApi
 import sz.sapphirex.pokedex.data.room.PokemonDao
 import sz.sapphirex.pokedex.data.room.PokemonDatabase
 import sz.sapphirex.pokedex.domain.model.ApiResult
-import sz.sapphirex.pokedex.domain.model.base.pokemon.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 import sz.sapphirex.pokedex.domain.utils.hasInternetConnection
 
