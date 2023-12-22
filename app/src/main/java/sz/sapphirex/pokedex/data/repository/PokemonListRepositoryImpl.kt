@@ -1,19 +1,23 @@
-package sz.sapphirex.pokedex.domain.repository
+package sz.sapphirex.pokedex.data.repository
 
-import kek.dex.pokedex.data.api.PokeApi
-import sz.sapphirex.pokedex.domain.model.DataResult
+import sz.sapphirex.pokedex.data.remote.PokeApi
+import sz.sapphirex.pokedex.domain.model.utils.DataResult
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import sz.sapphirex.pokedex.data.api.ApiEndpoints.ENDPOINT_POKEMON
-import sz.sapphirex.pokedex.data.database.PokemonDao
+import sz.sapphirex.pokedex.data.remote.ApiEndpoints.ENDPOINT_POKEMON
+import sz.sapphirex.pokedex.data.local.PokemonDao
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
+import sz.sapphirex.pokedex.domain.repository.PokemonListRepository
+import java.io.IOException
+import javax.inject.Inject
 
-class PokedexAppImpl(
+class PokemonListRepositoryImpl @Inject constructor(
     private val pokeApi: PokeApi,
     private val dao: PokemonDao
-): PokedexRepository {
-    override fun getPokemon(): Flow<DataResult<List<Pokemon>>> = flow {
+): PokemonListRepository {
+    override fun getPokemonList(): Flow<DataResult<List<Pokemon>>> = flow {
         emit(DataResult.Loading)
 
         // Emit first 20 items from db,
@@ -36,8 +40,10 @@ class PokedexAppImpl(
                     }
                 }
                 emit(DataResult.Success(data))
+            } catch (e: IOException) {
+                emit(DataResult.Error(e, "No Internet Connection"))
             } catch (e: Exception) {
-                emit(DataResult.Error(e))
+                emit(DataResult.Error(e, e.localizedMessage))
             }
         }
 
@@ -48,5 +54,13 @@ class PokedexAppImpl(
 //        } else {
 //            emit(DataResult.Success(daoPokemonList))
 //        }
+    }
+
+    override fun searchPokemon(query: String): Flow<DataResult<List<Pokemon>>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPokemonByTypes(pokemonTypes: List<PokemonType>): Flow<DataResult<List<Pokemon>>> {
+        TODO("Not yet implemented")
     }
 }
