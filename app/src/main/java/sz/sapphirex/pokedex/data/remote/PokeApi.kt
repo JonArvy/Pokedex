@@ -1,27 +1,17 @@
-package kek.dex.pokedex.data.api
+package sz.sapphirex.pokedex.data.remote
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
-import sz.sapphirex.pokedex.data.api.ApiEndpoints
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Ability
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonSpecies
 import sz.sapphirex.pokedex.domain.model.base.resource.Named
+import javax.inject.Inject
 
-class PokeApi {
-    private val client = HttpClient(OkHttp) {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
-        }
-    }
-
+class PokeApi @Inject constructor(
+    private val httpClient: HttpClient
+) {
     /******************** GENERIC ENDPOINT ********************/
     suspend fun getDataByEndpoint(endpoint: String): Named {
         return safeApiCall<Named>(endpoint)
@@ -56,7 +46,7 @@ class PokeApi {
     /******************** HELPER ********************/
     // Api Caller Main Function
     private suspend inline fun <reified T : Any> safeApiCall(endpoint: String): T {
-        val result = client.get(endpoint)
+        val result = httpClient.get(endpoint)
         return result.body<T>()
     }
 }
