@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.domain.model
+package sz.sapphirex.pokedex.domain.model.utils
 
 import sz.sapphirex.pokedex.domain.utils.ApplicationLogger
 import java.lang.Exception

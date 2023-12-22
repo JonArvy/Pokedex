@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.data.database
+package sz.sapphirex.pokedex.data.local
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.encodeToString

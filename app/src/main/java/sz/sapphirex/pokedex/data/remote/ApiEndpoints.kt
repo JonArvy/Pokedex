@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.data.api
+package sz.sapphirex.pokedex.data.remote
 
 object ApiEndpoints {
     const val DEFAULT_API = "https://pokeapi.co/api/v2/"
