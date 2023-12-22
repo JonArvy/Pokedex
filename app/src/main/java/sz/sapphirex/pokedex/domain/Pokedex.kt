@@ -1,12 +1,6 @@
 package sz.sapphirex.pokedex.domain
 
 import android.content.Context
-import androidx.room.Room
-import sz.sapphirex.pokedex.data.api.ApiEndpoints.ENDPOINT_POKEMON
-import sz.sapphirex.pokedex.data.database.PokemonDao
-import sz.sapphirex.pokedex.data.database.PokemonDatabase
-import sz.sapphirex.pokedex.domain.model.DataResult
-import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 
 @Deprecated("Migration with flow usage in PokedexRepository")
 class Pokedex(private val context: Context) {
