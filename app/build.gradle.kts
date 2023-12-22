@@ -95,8 +95,18 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    val hilt = "2.50"
+    implementation("com.google.dagger:hilt-android:$hilt")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt")
+
+    // Voyager
+    val voyager = "1.0.0"
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyager")
+    implementation("cafe.adriel.voyager:voyager-screenmodel:$voyager")
+    implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyager")
+    implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyager")
+    implementation("cafe.adriel.voyager:voyager-transitions:$voyager")
+    implementation("cafe.adriel.voyager:voyager-hilt:$voyager")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
