@@ -1,6 +1,5 @@
 package sz.sapphirex.pokedex.domain.model.dto.utility
 
-
 data class LanguageDto(
     val id: Int,
     val name: String,

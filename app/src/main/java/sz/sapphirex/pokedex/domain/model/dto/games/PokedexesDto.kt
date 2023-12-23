@@ -2,7 +2,6 @@ package sz.sapphirex.pokedex.domain.model.dto.games
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.base.games.PokemonEntry
 import sz.sapphirex.pokedex.domain.model.dto.utility.DescriptionDto
 import sz.sapphirex.pokedex.domain.model.dto.utility.NameDto
 import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
@@ -14,7 +13,7 @@ data class PokedexDto(
     @SerialName("is_main_series") val isMainSeries: Boolean,
     val descriptions: List<DescriptionDto>,
     val names: List<NameDto>,
-    @SerialName("pokemon_entries") val pokemonEntries: List<PokemonEntry>,
+    @SerialName("pokemon_entries") val pokemonEntries: List<PokemonEntryDto>,
     val region: NamedAPIResourceDto,
     @SerialName("version_groups") val versionGroups: List<NamedAPIResourceDto>
 )
