@@ -2,9 +2,6 @@ package sz.sapphirex.pokedex.domain.model.dto.utility
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.base.utility.APIResource
-import sz.sapphirex.pokedex.domain.model.base.utility.Encounter
-import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
 
 @Serializable
 data class APIResourceDto(
@@ -14,47 +11,47 @@ data class APIResourceDto(
 @Serializable
 data class DescriptionDto(
     val description: String,
-    val language: NamedAPIResource
+    val language: NamedAPIResourceDto
 )
 
 @Serializable
 data class EffectDto(
     val effect: String,
-    val language: NamedAPIResource
+    val language: NamedAPIResourceDto
 )
 
 @Serializable
 data class EncounterDto(
     @SerialName("min_level") val minLevel: Int,
     @SerialName("max_level") val maxLevel: Int,
-    @SerialName("condition_values") val conditionValues: List<NamedAPIResource>,
+    @SerialName("condition_values") val conditionValues: List<NamedAPIResourceDto>,
     val chance: Int,
-    val method: NamedAPIResource
+    val method: NamedAPIResourceDto
 )
 
 @Serializable
 data class FlavorTextDto(
     @SerialName("flavor_text") val flavorText: String,
-    val language: NamedAPIResource,
-    val version: NamedAPIResource,
+    val language: NamedAPIResourceDto,
+    val version: NamedAPIResourceDto,
 )
 
 @Serializable
 data class GenerationGameIndexDto(
     @SerialName("game_index") val gameIndex: Int,
-    val generation: NamedAPIResource
+    val generation: NamedAPIResourceDto
 )
 
 @Serializable
 data class MachineVersionDetailDto(
-    val machine: APIResource,
-    @SerialName("version_group") val versionGroup: NamedAPIResource
+    val machine: APIResourceDto,
+    @SerialName("version_group") val versionGroup: NamedAPIResourceDto
 )
 
 @Serializable
 data class NameDto(
     val name: String,
-    val language: NamedAPIResource
+    val language: NamedAPIResourceDto
 )
 
 @Serializable
@@ -67,25 +64,25 @@ data class NamedAPIResourceDto(
 data class VerboseEffectDto(
     val effect: String,
     @SerialName("short_effect") val shortEffect: String,
-    val language: NamedAPIResource,
+    val language: NamedAPIResourceDto,
 )
 
 @Serializable
 data class VersionEncounterDetailDto(
-    val version: NamedAPIResource,
+    val version: NamedAPIResourceDto,
     @SerialName("max_chance") val maxChance: Int,
-    @SerialName("encounter_details") val encounterDetails: List<Encounter>
+    @SerialName("encounter_details") val encounterDetails: List<EncounterDto>
 )
 
 @Serializable
 data class VersionGameIndexDto(
     @SerialName("game_index") val gameIndex: Int,
-    val version: NamedAPIResource
+    val version: NamedAPIResourceDto
 )
 
 @Serializable
 data class VersionGroupFlavorTextDto(
     val text: String,
-    val language: NamedAPIResource,
-    @SerialName("version_group") val versionGroup: NamedAPIResource
+    val language: NamedAPIResourceDto,
+    @SerialName("version_group") val versionGroup: NamedAPIResourceDto
 )
