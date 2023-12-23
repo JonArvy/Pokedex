@@ -2,6 +2,8 @@ package sz.sapphirex.pokedex.data.remote.dto.utility
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import sz.sapphirex.pokedex.domain.model.base.pokemon.VersionGameIndex
+import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
 
 @Serializable
 data class APIResourceDto(
@@ -58,7 +60,14 @@ data class NameDto(
 data class NamedAPIResourceDto(
     val name: String,
     val url: String
-)
+) {
+    fun toNamedAPIResource(): NamedAPIResource {
+        return NamedAPIResource(
+            name = name,
+            url = url
+        )
+    }
+}
 
 @Serializable
 data class VerboseEffectDto(
@@ -78,7 +87,14 @@ data class VersionEncounterDetailDto(
 data class VersionGameIndexDto(
     @SerialName("game_index") val gameIndex: Int,
     val version: NamedAPIResourceDto
-)
+) {
+    fun toVersionGameIndex(): VersionGameIndex {
+        return VersionGameIndex(
+            gameIndex = gameIndex,
+            version = version.toNamedAPIResource()
+        )
+    }
+}
 
 @Serializable
 data class VersionGroupFlavorTextDto(
