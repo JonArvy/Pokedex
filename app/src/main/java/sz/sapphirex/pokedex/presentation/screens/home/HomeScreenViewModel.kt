@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
-import sz.sapphirex.pokedex.domain.use_case.PokemonList
+import sz.sapphirex.pokedex.domain.use_case.GetPokemonList
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val pokedex: PokemonList
+    private val pokedex: GetPokemonList
 ): ViewModel() {
     private val _pokemons = MutableStateFlow<DataResult<List<Pokemon>>>(DataResult.Loading)
     val pokemons = _pokemons.asStateFlow()

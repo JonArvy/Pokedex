@@ -7,7 +7,7 @@ import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
 import sz.sapphirex.pokedex.domain.repository.PokemonListRepository
 import javax.inject.Inject
 
-class PokemonList @Inject constructor(
+class GetPokemonList @Inject constructor(
     private val repository: PokemonListRepository
 ) {
     operator fun invoke(): Flow<DataResult<List<Pokemon>>> {
