@@ -1,11 +1,11 @@
-package sz.sapphirex.pokedex.domain.model.dto.pokemon
+package sz.sapphirex.pokedex.data.remote.dto.pokemon
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.EffectDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.NameDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.VerboseEffectDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.EffectDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NameDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.VerboseEffectDto
 
 @Serializable
 data class AbilityDto(

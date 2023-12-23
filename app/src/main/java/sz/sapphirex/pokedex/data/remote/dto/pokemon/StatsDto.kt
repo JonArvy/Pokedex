@@ -1,10 +1,10 @@
-package sz.sapphirex.pokedex.domain.model.dto.pokemon
+package sz.sapphirex.pokedex.data.remote.dto.pokemon
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.APIResourceDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.NameDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.APIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NameDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
 
 @Serializable
 data class StatDto(

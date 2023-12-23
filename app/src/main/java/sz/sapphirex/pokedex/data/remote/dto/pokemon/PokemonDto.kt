@@ -1,11 +1,11 @@
-package sz.sapphirex.pokedex.domain.model.dto.pokemon
+package sz.sapphirex.pokedex.data.remote.dto.pokemon
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.VersionGameIndexDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.VersionGameIndexDto
 
 @Serializable
 @Entity(tableName = "pokemon")

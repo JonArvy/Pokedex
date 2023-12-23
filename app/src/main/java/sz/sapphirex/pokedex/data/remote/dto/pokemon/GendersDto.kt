@@ -1,8 +1,8 @@
-package sz.sapphirex.pokedex.domain.model.dto.pokemon
+package sz.sapphirex.pokedex.data.remote.dto.pokemon
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
 
 @Serializable
 data class GenderDto(
