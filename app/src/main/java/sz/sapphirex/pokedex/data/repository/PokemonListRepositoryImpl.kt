@@ -27,12 +27,12 @@ class PokemonListRepositoryImpl @Inject constructor(
             emit(DataResult.Success(dao.getPokemonListByName(firstPagePokemons)))
         } else {
             try {
-                val firstPageApi: Named = pokeApi.getDataByEndpoint(ENDPOINT_POKEMON)
+                val firstPageApi: Named = pokeApi.getDataByEndpoint(ENDPOINT_POKEMON).toNamed()
                 dao.insertNamed(firstPageApi)
                 val data: List<Pokemon> = firstPageApi.results.map { result ->
                     val daoPokemon = dao.getPokemon(result.name)
                     if (daoPokemon == null) {
-                        val pokemon = pokeApi.getPokemon(result.name)
+                        val pokemon = pokeApi.getPokemon(result.name).toPokemon()
                         dao.insertPokemon(pokemon)
                         pokemon
                     } else {
