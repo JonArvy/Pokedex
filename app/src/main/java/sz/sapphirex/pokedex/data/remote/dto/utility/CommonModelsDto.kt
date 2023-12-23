@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.domain.model.dto.utility
+package sz.sapphirex.pokedex.data.remote.dto.utility
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,9 +1,9 @@
-package sz.sapphirex.pokedex.domain.model.dto.resource
+package sz.sapphirex.pokedex.data.remote.dto.resource
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
 
 @Serializable
 @Entity(tableName = "named")
