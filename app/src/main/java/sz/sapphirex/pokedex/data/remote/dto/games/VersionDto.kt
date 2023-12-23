@@ -1,9 +1,9 @@
-package sz.sapphirex.pokedex.domain.model.dto.games
+package sz.sapphirex.pokedex.data.remote.dto.games
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.dto.utility.NameDto
-import sz.sapphirex.pokedex.domain.model.dto.utility.NamedAPIResourceDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NameDto
+import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
 
 @Serializable
 data class VersionDto(
