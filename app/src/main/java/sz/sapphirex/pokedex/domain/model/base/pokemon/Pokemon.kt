@@ -1,105 +1,197 @@
 package sz.sapphirex.pokedex.domain.model.base.pokemon
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonAbilityEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonFormTypeEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonHeldItemEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonHeldItemVersionEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonMoveEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonMoveVersionEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonSpritesEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonStatEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonTypeEntity
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonTypePastEntity
 import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
+import sz.sapphirex.pokedex.domain.model.base.utility.VersionGameIndex
 
-@Serializable
-@Entity(tableName = "pokemon")
 data class Pokemon(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val name: String,
-    @SerialName("base_experience") val baseExperience: Int,
+    val baseExperience: Int,
     val height: Int,
-    @SerialName("is_default") val isDefault: Boolean,
+    val isDefault: Boolean,
     val order: Int,
     val weight: Int,
     val abilities: List<PokemonAbility>,
     val forms: List<NamedAPIResource>,
-    @SerialName("game_indices") val gameIndices: List<VersionGameIndex>,
-    @SerialName("held_items") val heldItems: List<PokemonHeldItem>,
-    @SerialName("location_area_encounters") val locationAreaEncounters: String,
+    val gameIndices: List<VersionGameIndex>,
+    val heldItems: List<PokemonHeldItem>,
+    val locationAreaEncounters: String,
     val moves: List<PokemonMove>,
-    @SerialName("past_types") val pastTypes: List<PokemonTypePast>,
+    val pastTypes: List<PokemonTypePast>,
     val sprites: PokemonSprites,
     val species: NamedAPIResource,
     val stats: List<PokemonStat>,
     val types: List<PokemonType>,
-)
+) {
+    fun toEntity(): PokemonEntity {
+        return PokemonEntity(
+            id = id,
+            name = name,
+            baseExperience = baseExperience,
+            height = height,
+            isDefault = isDefault,
+            order = order,
+            weight = weight,
+            abilities = abilities.map { it.toEntity() },
+            forms = forms.map { it.toEntity() },
+            gameIndices = gameIndices.map { it.toEntity() },
+            heldItems = heldItems.map { it.toEntity() },
+            locationAreaEncounters = locationAreaEncounters,
+            moves = moves.map { it.toEntity() },
+            pastTypes = pastTypes.map { it.toEntity() },
+            sprites = sprites.toEntity(),
+            species = species.toEntity(),
+            stats = stats.map { it.toEntity() },
+            types = types.map { it.toEntity() }
+        )
+    }
+}
 
-@Serializable
 data class PokemonAbility(
-    @SerialName("is_hidden") val isHidden: Boolean,
+    val isHidden: Boolean,
     val slot: Int,
     val ability: NamedAPIResource,
-)
+) {
+    fun toEntity(): PokemonAbilityEntity {
+        return PokemonAbilityEntity(
+            isHidden = isHidden,
+            slot = slot,
+            ability = ability.toEntity()
+        )
+    }
+}
 
-@Serializable
 data class PokemonFormType(
     val slot: Int,
     val type: NamedAPIResource
-)
+) {
+    fun toEntity(): PokemonFormTypeEntity {
+        return PokemonFormTypeEntity(
+            slot = slot,
+            type = type.toEntity()
+        )
+    }
+}
 
-@Serializable
 data class PokemonHeldItem(
     val item: NamedAPIResource,
-    @SerialName("version_details") val versionDetails: List<PokemonHeldItemVersion>
-)
+    val versionDetails: List<PokemonHeldItemVersion>
+) {
+    fun toEntity(): PokemonHeldItemEntity {
+        return PokemonHeldItemEntity(
+            item = item.toEntity(),
+            versionDetails = versionDetails.map { it.toEntity() }
+        )
+    }
+}
 
-@Serializable
 data class PokemonHeldItemVersion(
     val version: NamedAPIResource,
     val rarity: Int,
-)
+) {
+    fun toEntity(): PokemonHeldItemVersionEntity {
+        return PokemonHeldItemVersionEntity(
+            version = version.toEntity(),
+            rarity = rarity
+        )
+    }
+}
 
-@Serializable
 data class PokemonMove(
     val move: NamedAPIResource,
-    @SerialName("version_group_details") val versionGroupDetails: List<PokemonMoveVersion>,
-)
+    val versionGroupDetails: List<PokemonMoveVersion>,
+) {
+    fun toEntity(): PokemonMoveEntity {
+        return PokemonMoveEntity(
+            move = move.toEntity(),
+            versionGroupDetails = versionGroupDetails.map { it.toEntity() }
+        )
+    }
+}
 
-@Serializable
 data class PokemonMoveVersion(
-    @SerialName("move_learn_method") val moveLearnMethod: NamedAPIResource,
-    @SerialName("version_group") val versionGroup: NamedAPIResource,
-    @SerialName("level_learned_at") val levelLearnedAt: Int,
-)
+    val moveLearnMethod: NamedAPIResource,
+    val versionGroup: NamedAPIResource,
+    val levelLearnedAt: Int,
+) {
+    fun toEntity(): PokemonMoveVersionEntity {
+        return PokemonMoveVersionEntity(
+            moveLearnMethod = moveLearnMethod.toEntity(),
+            versionGroup = versionGroup.toEntity(),
+            levelLearnedAt = levelLearnedAt
+        )
+    }
+}
 
-@Serializable
 data class PokemonSprites(
-    @SerialName("back_default") val backDefault: String?,
-    @SerialName("back_female") val backFemale: String?,
-    @SerialName("back_shiny") val backShiny: String?,
-    @SerialName("back_shiny_female") val backShinyFemale: String?,
-    @SerialName("front_default") val frontDefault: String?,
-    @SerialName("front_female") val frontFemale: String?,
-    @SerialName("front_shiny") val frontShiny: String?,
-    @SerialName("front_shiny_female") val frontShinyFemale: String?,
-)
+    val backDefault: String?,
+    val backFemale: String?,
+    val backShiny: String?,
+    val backShinyFemale: String?,
+    val frontDefault: String?,
+    val frontFemale: String?,
+    val frontShiny: String?,
+    val frontShinyFemale: String?,
+) {
+    fun toEntity(): PokemonSpritesEntity {
+        return PokemonSpritesEntity(
+            backDefault = backDefault,
+            backFemale = backFemale,
+            backShiny = backShiny,
+            backShinyFemale = backShinyFemale,
+            frontDefault = frontDefault,
+            frontFemale = frontFemale,
+            frontShiny = frontShiny,
+            frontShinyFemale = frontShinyFemale
+        )
+    }
+}
 
-@Serializable
 data class PokemonStat(
     val stat: NamedAPIResource,
     val effort: Int,
-    @SerialName("base_stat") val baseStats: Int,
-)
+    val baseStats: Int,
+) {
+    fun toEntity(): PokemonStatEntity {
+        return PokemonStatEntity(
+            stat = stat.toEntity(),
+            effort = effort,
+            baseStats = baseStats
+        )
+    }
+}
 
-@Serializable
 data class PokemonType(
     val slot: Int,
     val type: NamedAPIResource
-)
+) {
+    fun toEntity(): PokemonTypeEntity {
+        return PokemonTypeEntity(
+            slot = slot,
+            type = type.toEntity()
+        )
+    }
+}
 
-@Serializable
 data class PokemonTypePast(
     val generation: NamedAPIResource,
     val types: List<PokemonType>
-)
-
-@Serializable
-data class VersionGameIndex(
-    @SerialName("game_index") val gameIndex: Int,
-    val version: NamedAPIResource
-)
+) {
+    fun toEntity(): PokemonTypePastEntity {
+        return PokemonTypePastEntity(
+            generation = generation.toEntity(),
+            types = types.map { it.toEntity() }
+        )
+    }
+}
