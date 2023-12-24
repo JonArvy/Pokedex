@@ -2,13 +2,19 @@ package sz.sapphirex.pokedex.data.remote.dto.utility
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import sz.sapphirex.pokedex.domain.model.base.pokemon.VersionGameIndex
+import sz.sapphirex.pokedex.data.local.entity.utility.NamedAPIResourceEntity
+import sz.sapphirex.pokedex.domain.model.base.utility.APIResource
 import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
+import sz.sapphirex.pokedex.domain.model.base.utility.VersionGameIndex
 
 @Serializable
 data class APIResourceDto(
     val url: String
-)
+) {
+    fun toBase(): APIResource {
+        return APIResource(url = url)
+    }
+}
 
 @Serializable
 data class DescriptionDto(
@@ -61,8 +67,15 @@ data class NamedAPIResourceDto(
     val name: String,
     val url: String
 ) {
-    fun toNamedAPIResource(): NamedAPIResource {
+    fun toBase(): NamedAPIResource {
         return NamedAPIResource(
+            name = name,
+            url = url
+        )
+    }
+
+    fun toEntity(): NamedAPIResourceEntity {
+        return NamedAPIResourceEntity(
             name = name,
             url = url
         )
@@ -88,10 +101,10 @@ data class VersionGameIndexDto(
     @SerialName("game_index") val gameIndex: Int,
     val version: NamedAPIResourceDto
 ) {
-    fun toVersionGameIndex(): VersionGameIndex {
+    fun toBase(): VersionGameIndex {
         return VersionGameIndex(
             gameIndex = gameIndex,
-            version = version.toNamedAPIResource()
+            version = version.toBase()
         )
     }
 }
