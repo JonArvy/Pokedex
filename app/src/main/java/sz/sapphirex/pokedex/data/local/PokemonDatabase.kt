@@ -3,13 +3,13 @@ package sz.sapphirex.pokedex.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
-import sz.sapphirex.pokedex.domain.model.base.resource.Named
+import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonEntity
+import sz.sapphirex.pokedex.data.local.entity.resource.NamedEntity
 
 @Database(
     entities = [
-        Pokemon::class,
-        Named::class,
+        PokemonEntity::class,
+        NamedEntity::class,
     ],
     version = 1,
     exportSchema = false
