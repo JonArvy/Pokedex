@@ -1,7 +1,5 @@
 package sz.sapphirex.pokedex.data.remote.dto.pokemon
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
@@ -17,12 +15,10 @@ import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonSprites
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonStat
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
 import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonTypePast
-import sz.sapphirex.pokedex.domain.model.base.pokemon.VersionGameIndex
 
 @Serializable
-@Entity(tableName = "pokemon")
 data class PokemonDto(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val name: String,
     @SerialName("base_experience") val baseExperience: Int,
     val height: Int,
@@ -41,7 +37,7 @@ data class PokemonDto(
     val stats: List<PokemonStatDto>,
     val types: List<PokemonTypeDto>,
 ) {
-    fun toPokemon(): Pokemon {
+    fun toBase(): Pokemon {
         return Pokemon(
             id = id,
             name = name,
@@ -50,17 +46,17 @@ data class PokemonDto(
             isDefault = isDefault,
             order = order,
             weight = weight,
-            abilities = abilities.map { it.toAbility() },
-            forms = forms.map { it.toNamedAPIResource() },
-            gameIndices = gameIndices.map { it.toVersionGameIndex() },
-            heldItems = heldItems.map { it.toPokemonHeldItem() },
+            abilities = abilities.map { it.toBase() },
+            forms = forms.map { it.toBase() },
+            gameIndices = gameIndices.map { it.toBase() },
+            heldItems = heldItems.map { it.toBase() },
             locationAreaEncounters = locationAreaEncounters,
-            moves = moves.map { it.toPokemonMove() },
-            pastTypes = pastTypes.map { it.toPokemonTypePast() },
-            sprites = sprites.toPokemonSprites(),
-            species = species.toNamedAPIResource(),
-            stats = stats.map { it.toPokemonStat() },
-            types = types.map { it.toPokemonType() }
+            moves = moves.map { it.toBase() },
+            pastTypes = pastTypes.map { it.toBase() },
+            sprites = sprites.toBase(),
+            species = species.toBase(),
+            stats = stats.map { it.toBase() },
+            types = types.map { it.toBase() }
         )
     }
 }
@@ -71,11 +67,11 @@ data class PokemonAbilityDto(
     val slot: Int,
     val ability: NamedAPIResourceDto,
 ) {
-    fun toAbility(): PokemonAbility {
+    fun toBase(): PokemonAbility {
         return PokemonAbility(
             isHidden = isHidden,
             slot = slot,
-            ability = ability.toNamedAPIResource()
+            ability = ability.toBase()
         )
     }
 }
@@ -85,10 +81,10 @@ data class PokemonFormTypeDto(
     val slot: Int,
     val type: NamedAPIResourceDto
 ) {
-    fun toPokemonFormType(): PokemonFormType {
+    fun toBase(): PokemonFormType {
         return PokemonFormType(
             slot = slot,
-            type = type.toNamedAPIResource()
+            type = type.toBase()
         )
     }
 }
@@ -98,10 +94,10 @@ data class PokemonHeldItemDto(
     val item: NamedAPIResourceDto,
     @SerialName("version_details") val versionDetails: List<PokemonHeldItemVersionDto>
 ) {
-    fun toPokemonHeldItem(): PokemonHeldItem {
+    fun toBase(): PokemonHeldItem {
         return PokemonHeldItem(
-            item = item.toNamedAPIResource(),
-            versionDetails = versionDetails.map { it.toPokemonHeldItemVersion() }
+            item = item.toBase(),
+            versionDetails = versionDetails.map { it.toBase() }
         )
     }
 }
@@ -111,9 +107,9 @@ data class PokemonHeldItemVersionDto(
     val version: NamedAPIResourceDto,
     val rarity: Int,
 ) {
-    fun toPokemonHeldItemVersion(): PokemonHeldItemVersion {
+    fun toBase(): PokemonHeldItemVersion {
         return PokemonHeldItemVersion(
-            version = version.toNamedAPIResource(),
+            version = version.toBase(),
             rarity = rarity
         )
     }
@@ -124,10 +120,10 @@ data class PokemonMoveDto(
     val move: NamedAPIResourceDto,
     @SerialName("version_group_details") val versionGroupDetails: List<PokemonMoveVersionDto>,
 ) {
-    fun toPokemonMove(): PokemonMove {
+    fun toBase(): PokemonMove {
         return PokemonMove(
-            move = move.toNamedAPIResource(),
-            versionGroupDetails = versionGroupDetails.map { it.toPokemonMoveVersion() }
+            move = move.toBase(),
+            versionGroupDetails = versionGroupDetails.map { it.toBase() }
         )
     }
 }
@@ -138,10 +134,10 @@ data class PokemonMoveVersionDto(
     @SerialName("version_group") val versionGroup: NamedAPIResourceDto,
     @SerialName("level_learned_at") val levelLearnedAt: Int,
 ) {
-    fun toPokemonMoveVersion(): PokemonMoveVersion {
+    fun toBase(): PokemonMoveVersion {
         return PokemonMoveVersion(
-            moveLearnMethod = moveLearnMethod.toNamedAPIResource(),
-            versionGroup = versionGroup.toNamedAPIResource(),
+            moveLearnMethod = moveLearnMethod.toBase(),
+            versionGroup = versionGroup.toBase(),
             levelLearnedAt = levelLearnedAt
         )
     }
@@ -158,7 +154,7 @@ data class PokemonSpritesDto(
     @SerialName("front_shiny") val frontShiny: String?,
     @SerialName("front_shiny_female") val frontShinyFemale: String?,
 ) {
-    fun toPokemonSprites(): PokemonSprites {
+    fun toBase(): PokemonSprites {
         return PokemonSprites(
             backDefault = backDefault,
             backFemale = backFemale,
@@ -178,9 +174,9 @@ data class PokemonStatDto(
     val effort: Int,
     @SerialName("base_stat") val baseStats: Int,
 ) {
-    fun toPokemonStat(): PokemonStat {
+    fun toBase(): PokemonStat {
         return PokemonStat(
-            stat = stat.toNamedAPIResource(),
+            stat = stat.toBase(),
             effort = effort,
             baseStats = baseStats
         )
@@ -192,10 +188,10 @@ data class PokemonTypeDto(
     val slot: Int,
     val type: NamedAPIResourceDto
 ) {
-    fun toPokemonType(): PokemonType {
+    fun toBase(): PokemonType {
         return PokemonType(
             slot = slot,
-            type = type.toNamedAPIResource()
+            type = type.toBase()
         )
     }
 }
@@ -205,23 +201,10 @@ data class PokemonTypePastDto(
     val generation: NamedAPIResourceDto,
     val types: List<PokemonTypeDto>
 ) {
-    fun toPokemonTypePast(): PokemonTypePast {
+    fun toBase(): PokemonTypePast {
         return PokemonTypePast(
-            generation = generation.toNamedAPIResource(),
-            types = types.map { it.toPokemonType() }
-        )
-    }
-}
-
-@Serializable
-data class VersionGameIndexDto(
-    @SerialName("game_index") val gameIndex: Int,
-    val version: NamedAPIResourceDto
-) {
-    fun toVersionGameIndex(): VersionGameIndex {
-        return VersionGameIndex(
-            gameIndex = gameIndex,
-            version = version.toNamedAPIResource()
+            generation = generation.toBase(),
+            types = types.map { it.toBase() }
         )
     }
 }
