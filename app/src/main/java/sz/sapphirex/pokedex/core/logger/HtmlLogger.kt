@@ -1,12 +1,10 @@
 package sz.sapphirex.pokedex.core.logger
 
-import android.content.Context
 import android.os.Environment
 import android.util.Log
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
-import javax.inject.Inject
 
 class HtmlLogger {
     private val fileName = "log.html"
