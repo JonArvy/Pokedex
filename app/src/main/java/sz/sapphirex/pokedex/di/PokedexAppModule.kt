@@ -51,8 +51,8 @@ object PokedexAppModule {
 
     @Provides
     @Singleton
-    fun provideHtmlLogger(@ApplicationContext context: Context): HtmlLogger {
-        return HtmlLogger(context)
+    fun provideHtmlLogger(): HtmlLogger {
+        return HtmlLogger()
     }
 
     @Provides
