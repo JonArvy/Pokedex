@@ -1,4 +1,4 @@
-package sz.sapphirex.pokedex.domain.utils
+package sz.sapphirex.pokedex.core.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
