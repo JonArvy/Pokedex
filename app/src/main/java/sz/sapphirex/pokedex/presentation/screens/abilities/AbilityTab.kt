@@ -2,7 +2,6 @@ package sz.sapphirex.pokedex.presentation.screens.abilities
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBox
-import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

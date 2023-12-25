@@ -1,7 +1,6 @@
 package sz.sapphirex.pokedex.presentation.screens.settings
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -1,8 +1,5 @@
 package sz.sapphirex.pokedex.domain.model.utils
 
-import sz.sapphirex.pokedex.core.logger.PokedexLogger
-import java.lang.Exception
-
 sealed class DataResult<out T> {
     data class Success<out T>(val data: T): DataResult<T>()
     data class Error(val exception: Exception, val message: String = "Error"): DataResult<Nothing>()
