@@ -13,6 +13,9 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPokemon(pokemon: PokemonEntity)
 
+    @Query("SELECT * FROM pokemon WHERE name = :id")
+    suspend fun getPokemon(id: Int): PokemonEntity?
+
     @Query("SELECT * FROM pokemon WHERE name = :name")
     suspend fun getPokemon(name: String): PokemonEntity?
 
