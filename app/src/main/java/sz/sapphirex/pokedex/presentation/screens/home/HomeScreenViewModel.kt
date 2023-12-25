@@ -6,18 +6,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
 import sz.sapphirex.pokedex.domain.use_case.GetPokemonList
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val pokedex: GetPokemonList
+    private val getPokemonList: GetPokemonList
 ): ViewModel() {
-    private val _pokemons = MutableStateFlow<DataResult<List<Pokemon>>>(DataResult.Loading)
+    private val _pokemons = MutableStateFlow<DataResult<List<SimplePokemon>>>(DataResult.Loading)
     val pokemons = _pokemons.asStateFlow()
-
 
     init {
         loadPokemons()
@@ -25,7 +24,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun loadPokemons() {
         viewModelScope.launch {
-            pokedex.invoke().collect { result ->
+            getPokemonList.invoke().collect { result ->
                 _pokemons.value = result
             }
         }
