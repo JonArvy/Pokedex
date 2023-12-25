@@ -1,6 +1,6 @@
 package sz.sapphirex.pokedex.domain.model.utils
 
-import sz.sapphirex.pokedex.domain.utils.ApplicationLogger
+import sz.sapphirex.pokedex.core.logger.PokedexLogger
 import java.lang.Exception
 
 sealed class DataResult<out T> {
@@ -11,7 +11,7 @@ sealed class DataResult<out T> {
     inline fun <reified T> getSuccessResult(onError: (Exception) -> Unit = {}): T? = when (this) {
         is Success -> this.data as T?
         is Error -> {
-            ApplicationLogger.apiLogger("DataResultModel Error: ${this.exception.message}")
+//            PokedexLogger.base.model("DataResult Model", "getSuccessResultError, can't return success data")
             onError(this.exception)
             null
         }
