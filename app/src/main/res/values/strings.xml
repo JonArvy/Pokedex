@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Pokedex</string>
+
+    <string name="home_tab">Home</string>
+    <string name="ability_tab">Ability</string>
+    <string name="move_tab">Move</string>
+    <string name="settings_tab">Settings</string>
 </resources>
