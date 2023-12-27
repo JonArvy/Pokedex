@@ -16,18 +16,19 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.AsyncImage
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
 import sz.sapphirex.pokedex.presentation.utils.toColor
 
 data class PokemonScreen(
-    private val id: Int
+    private val simplePokemon: SimplePokemon
 ): Screen {
     @Composable
     override fun Content() {
         val pokemonScreenViewModel = getViewModel<PokemonScreenViewModel>()
         val pokemonResult by pokemonScreenViewModel.pokemon.collectAsState()
 
-        pokemonScreenViewModel.getPokemon(id) // Invoke part
+        pokemonScreenViewModel.getPokemon(simplePokemon.id) // Invoke part
 
         Column(
             modifier = Modifier
@@ -36,7 +37,7 @@ data class PokemonScreen(
             when (val data = pokemonResult) {
                 is DataResult.Success -> PokemonPage(pokemon = data.data)
                 is DataResult.Error -> Text(text = data.message)
-                is DataResult.Loading -> Text(text = "Loading")
+                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
             }
         }
     }
@@ -55,6 +56,27 @@ data class PokemonScreen(
                 AsyncImage(
                     model = pokemon.sprites.frontDefault,
                     contentDescription = pokemon.name,
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun PokemonPage(simplePokemon: SimplePokemon) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(.3f),
+            color = simplePokemon.types.toColor()
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AsyncImage(
+                    model = simplePokemon.sprites.frontDefault,
+                    contentDescription = simplePokemon.name,
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier.fillMaxSize()
                 )

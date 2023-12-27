@@ -36,7 +36,7 @@ fun PokemonCard(pokemon: SimplePokemon, padding: PaddingValues) {
         ,
         shape = RoundedCornerShape(6.dp),
         onClick = {
-            navigator.push(PokemonScreen(pokemon.id))
+            navigator.push(PokemonScreen(pokemon))
         }
     ) {
         Column(
