@@ -1,11 +1,22 @@
 package sz.sapphirex.pokedex.data.local.entity.utility
 
+import sz.sapphirex.pokedex.domain.model.base.utility.APIResource
+import sz.sapphirex.pokedex.domain.model.base.utility.Effect
+import sz.sapphirex.pokedex.domain.model.base.utility.MachineVersionDetail
+import sz.sapphirex.pokedex.domain.model.base.utility.Name
 import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
+import sz.sapphirex.pokedex.domain.model.base.utility.VerboseEffect
 import sz.sapphirex.pokedex.domain.model.base.utility.VersionGameIndex
 
 data class APIResourceEntity(
     val url: String
-)
+) {
+    fun toBase(): APIResource {
+        return APIResource(
+            url = url
+        )
+    }
+}
 
 data class DescriptionEntity(
     val description: String,
@@ -15,7 +26,14 @@ data class DescriptionEntity(
 data class EffectEntity(
     val effect: String,
     val language: NamedAPIResourceEntity
-)
+) {
+    fun toBase(): Effect {
+        return Effect(
+            effect = effect,
+            language = language.toBase()
+        )
+    }
+}
 
 data class EncounterEntity(
     val minLevel: Int,
@@ -39,12 +57,26 @@ data class GenerationGameIndexEntity(
 data class MachineVersionDetailEntity(
     val machine: APIResourceEntity,
     val versionGroup: NamedAPIResourceEntity
-)
+) {
+    fun toBase(): MachineVersionDetail {
+        return MachineVersionDetail(
+            machine = machine.toBase(),
+            versionGroup = versionGroup.toBase()
+        )
+    }
+}
 
 data class NameEntity(
     val name: String,
     val language: NamedAPIResourceEntity
-)
+) {
+    fun toBase(): Name {
+        return Name(
+            name = name,
+            language = language.toBase()
+        )
+    }
+}
 
 data class NamedAPIResourceEntity(
     val name: String,
@@ -62,7 +94,15 @@ data class VerboseEffectEntity(
     val effect: String,
     val shortEffect: String,
     val language: NamedAPIResourceEntity
-)
+) {
+    fun toBase(): VerboseEffect {
+        return VerboseEffect(
+            effect = effect,
+            shortEffect = shortEffect,
+            language = language.toBase()
+        )
+    }
+}
 
 data class VersionEncounterDetailEntity(
     val version: NamedAPIResourceEntity,

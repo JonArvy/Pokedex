@@ -4,6 +4,7 @@ import sz.sapphirex.pokedex.data.local.entity.utility.EffectEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.NameEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.NamedAPIResourceEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.VerboseEffectEntity
+import sz.sapphirex.pokedex.domain.model.base.pokemon.AbilityEffectChange
 
 data class AbilityEntity(
     val id: Int,
@@ -20,7 +21,14 @@ data class AbilityEntity(
 data class AbilityEffectChangeEntity(
     val effectEntries: List<EffectEntity>,
     val versionGroup: NamedAPIResourceEntity
-)
+) {
+    fun toBase(): AbilityEffectChange {
+        return AbilityEffectChange(
+            effectEntries = effectEntries.map { it.toBase() },
+            versionGroup = versionGroup.toBase()
+        )
+    }
+}
 
 data class AbilityFlavorTextEntity(
     val flavorText: String,
