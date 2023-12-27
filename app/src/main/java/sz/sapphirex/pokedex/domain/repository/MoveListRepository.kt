@@ -1,0 +1,11 @@
+package sz.sapphirex.pokedex.domain.repository
+
+import kotlinx.coroutines.flow.Flow
+import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
+import sz.sapphirex.pokedex.domain.model.utils.DataResult
+
+interface MoveListRepository {
+    fun getMoveList(): Flow<DataResult<List<SimpleMove>>>
+
+    fun searchMove(query: String): Flow<DataResult<List<SimpleMove>>>
+}
