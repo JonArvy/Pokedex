@@ -49,15 +49,15 @@ object PokedexAppModule {
         return pokemonDatabase.pokemonDao()
     }
 
-    @Provides
-    @Singleton
-    fun provideHtmlLogger(): HtmlLogger {
-        return HtmlLogger()
-    }
-
-    @Provides
-    @Singleton
-    fun provideLogger(htmlLogger: HtmlLogger): Logger {
-        return PokedexLogger(htmlLogger)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideHtmlLogger(): HtmlLogger {
+//        return HtmlLogger()
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideLogger(htmlLogger: HtmlLogger): Logger {
+//        return PokedexLogger(htmlLogger)
+//    }
 }

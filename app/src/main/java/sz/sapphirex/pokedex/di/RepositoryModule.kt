@@ -18,8 +18,8 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun providePokedexRepository(api: PokeApi, pokemonDao: PokemonDao, logger: Logger): PokemonListRepository {
-        return PokemonListRepositoryImpl(api, pokemonDao, logger)
+    fun providePokedexRepository(api: PokeApi, pokemonDao: PokemonDao): PokemonListRepository {
+        return PokemonListRepositoryImpl(api, pokemonDao)
     }
 
     @Provides
