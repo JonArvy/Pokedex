@@ -6,6 +6,7 @@ import sz.sapphirex.pokedex.domain.model.base.utility.MachineVersionDetail
 import sz.sapphirex.pokedex.domain.model.base.utility.Name
 import sz.sapphirex.pokedex.domain.model.base.utility.NamedAPIResource
 import sz.sapphirex.pokedex.domain.model.base.utility.VerboseEffect
+import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
 
 data class Move(
     val id: Int,
@@ -32,7 +33,15 @@ data class Move(
     val superContestEffect: APIResource,
     val target: NamedAPIResource,
     val type: NamedAPIResource
-)
+) {
+    fun toSimple(): SimpleMove {
+        return SimpleMove(
+            id = id,
+            name = name,
+            type = type
+        )
+    }
+}
 
 data class ContestComboSets(
     val normal: ContestComboDetail,
