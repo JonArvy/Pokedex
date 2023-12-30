@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import sz.sapphirex.pokedex.data.local.entity.moves.MoveEntity
 import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonEntity
 import sz.sapphirex.pokedex.data.local.entity.resource.NamedEntity
 
@@ -21,6 +22,15 @@ interface PokemonDao {
 
     @Query("SELECT * FROM pokemon")
     suspend fun getAllPokemon(): List<PokemonEntity>
+
+    @Query("SELECT * FROM move WHERE name = :id")
+    suspend fun getMove(id: Int): MoveEntity?
+
+    @Query("SELECT * FROM move WHERE name = :name")
+    suspend fun getMove(name: String): MoveEntity?
+
+    @Query("SELECT * FROM pokemon")
+    suspend fun getAllMove(): List<MoveEntity>
 
     @Query("SELECT * FROM pokemon WHERE name IN(:nameList)")
     suspend fun getPokemonListByName(nameList: List<String>): List<PokemonEntity>
