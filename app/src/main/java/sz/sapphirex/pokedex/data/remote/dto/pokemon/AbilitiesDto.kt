@@ -6,6 +6,7 @@ import sz.sapphirex.pokedex.data.remote.dto.utility.EffectDto
 import sz.sapphirex.pokedex.data.remote.dto.utility.NameDto
 import sz.sapphirex.pokedex.data.remote.dto.utility.NamedAPIResourceDto
 import sz.sapphirex.pokedex.data.remote.dto.utility.VerboseEffectDto
+import sz.sapphirex.pokedex.domain.model.base.pokemon.AbilityEffectChange
 
 @Serializable
 data class AbilityDto(
@@ -24,7 +25,14 @@ data class AbilityDto(
 data class AbilityEffectChangeDto(
     @SerialName("effect_entries") val effectEntries: List<EffectDto>,
     @SerialName("version_group") val versionGroup: NamedAPIResourceDto
-)
+) {
+    fun toBase(): AbilityEffectChange {
+        return AbilityEffectChange(
+            effectEntries = effectEntries.map { it.toBase() },
+            versionGroup = versionGroup.toBase()
+        )
+    }
+}
 
 @Serializable
 data class AbilityFlavorTextDto(
