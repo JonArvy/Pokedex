@@ -3,10 +3,12 @@ package sz.sapphirex.pokedex.data.remote
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import sz.sapphirex.pokedex.data.remote.dto.moves.MoveDto
 import sz.sapphirex.pokedex.data.remote.dto.pokemon.AbilityDto
 import sz.sapphirex.pokedex.data.remote.dto.pokemon.PokemonDto
 import sz.sapphirex.pokedex.data.remote.dto.pokemon.PokemonSpeciesDto
 import sz.sapphirex.pokedex.data.remote.dto.resource.NamedDto
+import sz.sapphirex.pokedex.domain.model.base.moves.Move
 import javax.inject.Inject
 
 class PokeApi @Inject constructor(
@@ -15,6 +17,15 @@ class PokeApi @Inject constructor(
     /******************** GENERIC ENDPOINT ********************/
     suspend fun getDataByEndpoint(endpoint: String): NamedDto {
         return safeApiCall<NamedDto>(endpoint)
+    }
+
+    /******************** MOVE ********************/
+    suspend fun getMove(id: Int): MoveDto {
+        return safeApiCall<MoveDto>("${ApiEndpoints.ENDPOINT_MOVE}$id/")
+    }
+
+    suspend fun getMove(name: String): MoveDto {
+        return safeApiCall<MoveDto>("${ApiEndpoints.ENDPOINT_MOVE}$name/")
     }
 
     /******************** POKEMON ********************/
