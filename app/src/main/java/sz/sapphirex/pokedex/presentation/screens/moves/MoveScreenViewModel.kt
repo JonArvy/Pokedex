@@ -26,7 +26,7 @@ class MoveScreenViewModel @Inject constructor(
     private fun loadPokemons() {
         viewModelScope.launch {
             getMoveList.invoke().collect { result ->
-                _moves.value = result
+                _moves.value = DataResult.Success(result)
             }
         }
     }
