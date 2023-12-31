@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetMoveList @Inject constructor(
     private val repository: MoveListRepository
 ) {
-    operator fun invoke(): Flow<DataResult<PagingData<SimpleMove>>> {
+    operator fun invoke(): Flow<PagingData<SimpleMove>> {
         return repository.getMoveList()
     }
 }

@@ -6,7 +6,7 @@ import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
 
 interface MoveListRepository {
-    fun getMoveList(): Flow<DataResult<PagingData<SimpleMove>>>
+    fun getMoveList(): Flow<PagingData<SimpleMove>>
 
     fun searchMove(query: String): Flow<DataResult<List<SimpleMove>>>
 }
