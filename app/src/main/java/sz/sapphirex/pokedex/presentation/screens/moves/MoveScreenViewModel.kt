@@ -3,7 +3,9 @@ package sz.sapphirex.pokedex.presentation.screens.moves
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -18,6 +20,8 @@ class MoveScreenViewModel @Inject constructor(
 ): ViewModel()  {
     private val _moves = MutableStateFlow<DataResult<PagingData<SimpleMove>>>(DataResult.Loading)
     val moves = _moves.asStateFlow()
+
+    val pagedData: Flow<PagingData<SimpleMove>> = getMoveList.invoke().cachedIn(viewModelScope)
 
     init {
         loadPokemons()

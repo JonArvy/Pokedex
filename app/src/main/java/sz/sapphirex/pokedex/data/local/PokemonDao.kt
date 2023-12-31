@@ -29,7 +29,7 @@ interface PokemonDao {
     @Query("SELECT * FROM move WHERE name = :name")
     suspend fun getMove(name: String): MoveEntity?
 
-    @Query("SELECT * FROM pokemon")
+    @Query("SELECT * FROM move")
     suspend fun getAllMove(): List<MoveEntity>
 
     @Query("SELECT * FROM pokemon WHERE name IN(:nameList)")
