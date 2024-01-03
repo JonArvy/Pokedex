@@ -11,12 +11,12 @@ import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
 data class Move(
     val id: Int,
     val name: String,
-    val accuracy: Int,
-    val effectChance: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    val effectChance: Int?,
+    val pp: Int?,
     val priority: Int,
-    val power: Int,
-    val contestCombos: ContestComboSets,
+    val power: Int?,
+    val contestCombos: ContestComboSets?,
     val contestType: NamedAPIResource,
     val contestEffect: APIResource,
     val damageClass: NamedAPIResource,
@@ -32,7 +32,7 @@ data class Move(
     val statChanges: List<MoveStatChange>,
     val superContestEffect: APIResource,
     val target: NamedAPIResource,
-    val type: NamedAPIResource
+    val type: NamedAPIResource?
 ) {
     fun toSimple(): SimpleMove {
         return SimpleMove(
@@ -49,8 +49,8 @@ data class ContestComboSets(
 )
 
 data class ContestComboDetail(
-    val useBefore: List<NamedAPIResource>,
-    val useAfter: List<NamedAPIResource>
+    val useBefore: List<NamedAPIResource>?,
+    val useAfter: List<NamedAPIResource>?
 )
 
 data class MoveFlavorText(
@@ -80,11 +80,11 @@ data class MoveStatChange(
 )
 
 data class PastMoveStatValues(
-    val accuracy: Int,
-    val effectChance: Int,
-    val power: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    val effectChance: Int?,
+    val power: Int?,
+    val pp: Int?,
     val effectEntries: List<VerboseEffect>,
-    val type: NamedAPIResource,
+    val type: NamedAPIResource?,
     val versionGroup: NamedAPIResource
 )

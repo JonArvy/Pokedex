@@ -20,12 +20,12 @@ import sz.sapphirex.pokedex.domain.model.base.moves.PastMoveStatValues
 data class MoveEntity(
     @PrimaryKey val id: Int,
     val name: String,
-    val accuracy: Int,
-    val effectChance: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    val effectChance: Int?,
+    val pp: Int?,
     val priority: Int,
-    val power: Int,
-    val contestCombos: ContestComboSetsEntity,
+    val power: Int?,
+    val contestCombos: ContestComboSetsEntity?,
     val contestType: NamedAPIResourceEntity,
     val contestEffect: APIResourceEntity,
     val damageClass: NamedAPIResourceEntity,
@@ -41,7 +41,7 @@ data class MoveEntity(
     val statChanges: List<MoveStatChangeEntity>,
     val superContestEffect: APIResourceEntity,
     val target: NamedAPIResourceEntity,
-    val type: NamedAPIResourceEntity
+    val type: NamedAPIResourceEntity?
 ) {
     fun toBase(): Move {
         return Move(
@@ -52,7 +52,7 @@ data class MoveEntity(
             pp = pp,
             priority = priority,
             power = power,
-            contestCombos = contestCombos.toBase(),
+            contestCombos = contestCombos?.toBase(),
             contestType = contestType.toBase(),
             contestEffect = contestEffect.toBase(),
             damageClass = damageClass.toBase(),
@@ -68,7 +68,7 @@ data class MoveEntity(
             statChanges = statChanges.map { it.toBase() },
             superContestEffect = superContestEffect.toBase(),
             target = target.toBase(),
-            type = type.toBase()
+            type = type?.toBase()
         )
     }
 }
@@ -86,13 +86,13 @@ data class ContestComboSetsEntity(
 }
 
 data class ContestComboDetailEntity(
-    val useBefore: List<NamedAPIResourceEntity>,
-    val useAfter: List<NamedAPIResourceEntity>
+    val useBefore: List<NamedAPIResourceEntity>?,
+    val useAfter: List<NamedAPIResourceEntity>?
 ) {
     fun toBase(): ContestComboDetail {
         return ContestComboDetail(
-            useBefore = useBefore.map { it.toBase() },
-            useAfter = useAfter.map { it.toBase() }
+            useBefore = useBefore?.map { it.toBase() },
+            useAfter = useAfter?.map { it.toBase() }
         )
     }
 }
@@ -156,12 +156,12 @@ data class MoveStatChangeEntity(
 }
 
 data class PastMoveStatValuesEntity(
-    val accuracy: Int,
-    val effectChance: Int,
-    val power: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    val effectChance: Int?,
+    val power: Int?,
+    val pp: Int?,
     val effectEntries: List<VerboseEffectEntity>,
-    val type: NamedAPIResourceEntity,
+    val type: NamedAPIResourceEntity?,
     val versionGroup: NamedAPIResourceEntity
 ) {
     fun toBase(): PastMoveStatValues {
@@ -171,7 +171,7 @@ data class PastMoveStatValuesEntity(
             power = power,
             pp = pp,
             effectEntries = effectEntries.map { it.toBase() },
-            type = type.toBase(),
+            type = type?.toBase(),
             versionGroup = versionGroup.toBase()
         )
     }

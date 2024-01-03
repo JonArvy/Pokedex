@@ -20,12 +20,12 @@ import sz.sapphirex.pokedex.domain.model.base.moves.PastMoveStatValues
 data class MoveDto(
     val id: Int,
     val name: String,
-    val accuracy: Int,
-    @SerialName("effect_chance") val effectChance: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    @SerialName("effect_chance") val effectChance: Int?,
+    val pp: Int?,
     val priority: Int,
-    val power: Int,
-    @SerialName("contest_combos") val contestCombos: ContestComboSetsDto,
+    val power: Int?,
+    @SerialName("contest_combos") val contestCombos: ContestComboSetsDto?,
     @SerialName("contest_type") val contestType: NamedAPIResourceDto,
     @SerialName("contest_effect") val contestEffect: APIResourceDto,
     @SerialName("damage_class") val damageClass: NamedAPIResourceDto,
@@ -41,7 +41,7 @@ data class MoveDto(
     @SerialName("stat_changes") val statChanges: List<MoveStatChangeDto>,
     @SerialName("super_contest_effect") val superContestEffect: APIResourceDto,
     val target: NamedAPIResourceDto,
-    val type: NamedAPIResourceDto
+    val type: NamedAPIResourceDto?
 ) {
     fun toBase(): Move {
         return Move(
@@ -52,7 +52,7 @@ data class MoveDto(
             pp = pp,
             priority = priority,
             power = power,
-            contestCombos = contestCombos.toBase(),
+            contestCombos = contestCombos?.toBase(),
             contestType = contestType.toBase(),
             contestEffect = contestEffect.toBase(),
             damageClass = damageClass.toBase(),
@@ -68,7 +68,7 @@ data class MoveDto(
             statChanges = statChanges.map { it.toBase() },
             superContestEffect = superContestEffect.toBase(),
             target = target.toBase(),
-            type = type.toBase()
+            type = type?.toBase()
         )
     }
 }
@@ -88,13 +88,13 @@ data class ContestComboSetsDto(
 
 @Serializable
 data class ContestComboDetailDto(
-    @SerialName("use_before") val useBefore: List<NamedAPIResourceDto>,
-    @SerialName("use_after") val useAfter: List<NamedAPIResourceDto>
+    @SerialName("use_before") val useBefore: List<NamedAPIResourceDto>?,
+    @SerialName("use_after") val useAfter: List<NamedAPIResourceDto>?
 ) {
     fun toBase(): ContestComboDetail {
         return ContestComboDetail(
-            useBefore = useBefore.map { it.toBase() },
-            useAfter = useAfter.map { it.toBase() }
+            useBefore = useBefore?.map { it.toBase() },
+            useAfter = useAfter?.map { it.toBase() }
         )
     }
 }
@@ -162,12 +162,12 @@ data class MoveStatChangeDto(
 
 @Serializable
 data class PastMoveStatValuesDto(
-    val accuracy: Int,
-    @SerialName("effect_chance") val effectChance: Int,
-    val power: Int,
-    val pp: Int,
+    val accuracy: Int?,
+    @SerialName("effect_chance") val effectChance: Int?,
+    val power: Int?,
+    val pp: Int?,
     @SerialName("effect_entries") val effectEntries: List<VerboseEffectDto>,
-    val type: NamedAPIResourceDto,
+    val type: NamedAPIResourceDto?,
     @SerialName("version_group") val versionGroup: NamedAPIResourceDto
 ) {
     fun toBase(): PastMoveStatValues {
@@ -177,7 +177,7 @@ data class PastMoveStatValuesDto(
             power = power,
             pp = pp,
             effectEntries = effectEntries.map { it.toBase() },
-            type = type.toBase(),
+            type = type?.toBase(),
             versionGroup = versionGroup.toBase()
         )
     }
