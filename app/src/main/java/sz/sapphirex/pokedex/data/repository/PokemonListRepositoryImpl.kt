@@ -1,5 +1,8 @@
 package sz.sapphirex.pokedex.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -7,6 +10,9 @@ import sz.sapphirex.pokedex.core.logger.Logger
 import sz.sapphirex.pokedex.data.local.PokemonDao
 import sz.sapphirex.pokedex.data.local.entity.pokemon.PokemonEntity
 import sz.sapphirex.pokedex.data.local.entity.resource.NamedEntity
+import sz.sapphirex.pokedex.data.pagingsource.MovePagingSource
+import sz.sapphirex.pokedex.data.pagingsource.PokemonPagingSource
+import sz.sapphirex.pokedex.data.remote.ApiEndpoints
 import sz.sapphirex.pokedex.data.remote.ApiEndpoints.ENDPOINT_POKEMON
 import sz.sapphirex.pokedex.data.remote.PokeApi
 import sz.sapphirex.pokedex.data.remote.dto.pokemon.PokemonDto
@@ -51,6 +57,23 @@ class PokemonListRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             handleGenericError(e)
         }
+    }
+
+    override fun getPokemonPagingData(): Flow<PagingData<SimplePokemon>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 2,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                PokemonPagingSource(
+                    initialEndpoint = ENDPOINT_POKEMON,
+                    api = pokeApi,
+                    dao = dao
+                )
+            }
+        ).flow
     }
 
     private suspend fun FlowCollector<DataResult<List<SimplePokemon>>>.handleApiCall() {
