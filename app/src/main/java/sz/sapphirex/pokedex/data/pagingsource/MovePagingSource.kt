@@ -24,16 +24,19 @@ class MovePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SimpleMove> {
         try {
             val endpoint = params.key?.let { "$initialEndpoint?offset=$it&limit=20" } ?: initialEndpoint
-            Log.e("Endpoint", endpoint)
-            val page: Named = dao.getNamed(endpoint)?.toBase() ?: api.getDataByEndpoint(endpoint).toBase()
-            Log.e("Page", page.toString())
-            val moveListName: List<String> = page.results.map { it.name }
-            Log.e("Move List Name", moveListName.toString())
-            val moveList: List<SimpleMove> = moveListName.map {
-                dao.getMove(it)?.toBase()?.toSimple() ?: api.getMove(it).toBase().toSimple()
+            val page: Named = dao.getNamed(endpoint)?.toBase() ?: run {
+                val namedData = api.getDataByEndpoint(endpoint)
+                dao.insertNamed(namedData.toEntity(endpoint))
+                namedData.toBase()
             }
-
-            Log.e("Move List", moveList.toString())
+            val moveListName: List<String> = page.results.map { it.name }
+            val moveList: List<SimpleMove> = moveListName.map {
+                dao.getMove(it)?.toBase()?.toSimple() ?: run {
+                    val moveData = api.getMove(it)
+                    dao.insertMove(moveData.toEntity())
+                    moveData.toBase().toSimple()
+                }
+            }
 
             val nextKey = page.next?.let {
                 val uri = Uri.parse(it)
@@ -47,14 +50,12 @@ class MovePagingSource(
 
             return LoadResult.Page(
                 data = moveList,
-                prevKey = nextKey,
-                nextKey = prevKey
+                prevKey = prevKey,
+                nextKey = nextKey
             )
         } catch (e: IOException) {
-            Log.e("Move List", e.message.toString())
             return LoadResult.Error(e)
         } catch (e: Exception) {
-            Log.e("Move List", e.message.toString())
             return LoadResult.Error(e)
         }
     }
