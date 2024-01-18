@@ -25,16 +25,22 @@ class PokemonPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SimplePokemon> {
         try {
             val endpoint = params.key?.let { "$initialEndpoint?offset=$it&limit=20" } ?: initialEndpoint
-            Log.e("Endpoint", endpoint)
-            val page: Named = dao.getNamed(endpoint)?.toBase() ?: api.getDataByEndpoint(endpoint).toBase()
-            Log.e("Page", page.toString())
-            val moveListName: List<String> = page.results.map { it.name }
-            Log.e("Pokemon List Name", moveListName.toString())
-            val moveList: List<SimplePokemon> = moveListName.map {
-                dao.getPokemon(it)?.toBase()?.toSimple() ?: api.getPokemon(it).toBase().toSimple()
+            val page: Named = dao.getNamed(endpoint)?.toBase() ?: run {
+                val apiData = api.getDataByEndpoint(endpoint)
+                /** For caching in room **/
+                dao.insertNamed(apiData.toEntity(endpoint))
+                apiData.toBase()
             }
 
-            Log.e("Pokemon List", moveList.toString())
+            val moveListName: List<String> = page.results.map { it.name }
+            val moveList: List<SimplePokemon> = moveListName.map {
+                dao.getPokemon(it)?.toBase()?.toSimple() ?: run {
+                    val pokemonData = api.getPokemon(it).toBase()
+                    /** For caching in room **/
+                    dao.insertPokemon(pokemonData.toEntity())
+                    pokemonData.toSimple()
+                }
+            }
 
             val nextKey = page.next?.let {
                 val uri = Uri.parse(it)
@@ -48,8 +54,8 @@ class PokemonPagingSource(
 
             return LoadResult.Page(
                 data = moveList,
-                prevKey = nextKey,
-                nextKey = prevKey
+                prevKey = prevKey,
+                nextKey = nextKey
             )
         } catch (e: IOException) {
             return LoadResult.Error(e)
