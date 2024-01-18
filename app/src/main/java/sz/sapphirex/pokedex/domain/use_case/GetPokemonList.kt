@@ -1,5 +1,7 @@
 package sz.sapphirex.pokedex.domain.use_case
 
+import android.webkit.WebViewClient
+import androidx.paging.PagingData
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
@@ -11,8 +13,8 @@ import javax.inject.Inject
 class GetPokemonList @Inject constructor(
     private val repository: PokemonListRepository
 ) {
-    operator fun invoke(): Flow<DataResult<List<SimplePokemon>>> {
-        return repository.getPokemonList()
+    operator fun invoke(): Flow<PagingData<SimplePokemon>> {
+        return repository.getPokemonPagingData()
     }
 
     operator fun invoke(query: String): Flow<DataResult<List<Pokemon>>> {
@@ -22,5 +24,4 @@ class GetPokemonList @Inject constructor(
     operator fun invoke(pokemonTypes: List<PokemonType>): Flow<DataResult<List<Pokemon>>> {
         return repository.getPokemonByTypes(pokemonTypes)
     }
-
 }
