@@ -17,6 +17,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
+import sz.sapphirex.pokedex.presentation.components.MoveCard
 
 class MoveScreen: Screen {
     @Composable
@@ -37,7 +38,8 @@ class MoveScreen: Screen {
                     val move: SimpleMove? = moveData[index]
 
                     move?.let {
-                        Text(text = it.name)
+//                        Text(text = it.name)
+                        MoveCard(move = it)
                     }
                 }
             }
