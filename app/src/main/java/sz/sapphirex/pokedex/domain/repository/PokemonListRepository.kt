@@ -9,6 +9,7 @@ import sz.sapphirex.pokedex.domain.model.simple.moves.SimpleMove
 import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 
 interface PokemonListRepository {
+    @Deprecated("Use getPokemonPagingData() instead")
     fun getPokemonList(): Flow<DataResult<List<SimplePokemon>>>
     fun getPokemonPagingData(): Flow<PagingData<SimplePokemon>>
 
