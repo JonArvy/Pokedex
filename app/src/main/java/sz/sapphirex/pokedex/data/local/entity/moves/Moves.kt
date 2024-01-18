@@ -2,12 +2,14 @@ package sz.sapphirex.pokedex.data.local.entity.moves
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import sz.sapphirex.pokedex.data.local.entity.EntityInterface
 import sz.sapphirex.pokedex.data.local.entity.pokemon.AbilityEffectChangeEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.APIResourceEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.MachineVersionDetailEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.NameEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.NamedAPIResourceEntity
 import sz.sapphirex.pokedex.data.local.entity.utility.VerboseEffectEntity
+import sz.sapphirex.pokedex.data.remote.dto.moves.MoveDto
 import sz.sapphirex.pokedex.domain.model.base.moves.ContestComboDetail
 import sz.sapphirex.pokedex.domain.model.base.moves.ContestComboSets
 import sz.sapphirex.pokedex.domain.model.base.moves.Move
@@ -42,8 +44,8 @@ data class MoveEntity(
     val superContestEffect: APIResourceEntity,
     val target: NamedAPIResourceEntity,
     val type: NamedAPIResourceEntity?
-) {
-    fun toBase(): Move {
+): EntityInterface {
+    override fun toBase(): Move {
         return Move(
             id = id,
             name = name,
@@ -70,6 +72,10 @@ data class MoveEntity(
             target = target.toBase(),
             type = type?.toBase()
         )
+    }
+
+    override fun toDto(): MoveDto {
+        TODO("Not yet implemented")
     }
 }
 
