@@ -33,6 +33,13 @@ class PokemonListRepositoryImpl @Inject constructor(
 //    private val logger: Logger
 ): PokemonListRepository {
 
+    /**
+     *
+     * Deprecated:
+     * Use Pager3 instead
+     *
+     * */
+    @Deprecated("Use getPokemonPagingData() instead")
     override fun getPokemonList(): Flow<DataResult<List<SimplePokemon>>> = flow {
         emit(DataResult.Loading)
 
@@ -76,6 +83,7 @@ class PokemonListRepositoryImpl @Inject constructor(
         ).flow
     }
 
+    @Deprecated("No need to use it")
     private suspend fun FlowCollector<DataResult<List<SimplePokemon>>>.handleApiCall() {
         try {
             val firstPageApi: NamedDto = pokeApi.getDataByEndpoint(ENDPOINT_POKEMON)
@@ -110,6 +118,7 @@ class PokemonListRepositoryImpl @Inject constructor(
         }
     }
 
+    @Deprecated("No need to use it")
     private suspend fun FlowCollector<DataResult<List<SimplePokemon>>>.handleOfflineError() {
         val offLinePage: NamedEntity? = dao.getNamed(ENDPOINT_POKEMON)
         if (offLinePage != null) {
@@ -124,6 +133,10 @@ class PokemonListRepositoryImpl @Inject constructor(
         }
     }
 
+    @Deprecated(
+        "No need to use it",
+        ReplaceWith("emit(DataResult.Error(e, e.message.toString()))", "sz.sapphirex.pokedex.domain.model.utils.DataResult")
+    )
     private suspend fun FlowCollector<DataResult<List<SimplePokemon>>>.handleGenericError(e: Exception) {
 //        logger.generic("Handle Generic Error", e.message.toString())
         emit(DataResult.Error(e, e.message.toString()))
