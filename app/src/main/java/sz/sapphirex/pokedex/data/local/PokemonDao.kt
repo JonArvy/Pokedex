@@ -23,6 +23,9 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon")
     suspend fun getAllPokemon(): List<PokemonEntity>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMove(move: MoveEntity)
+
     @Query("SELECT * FROM move WHERE name = :id")
     suspend fun getMove(id: Int): MoveEntity?
 
