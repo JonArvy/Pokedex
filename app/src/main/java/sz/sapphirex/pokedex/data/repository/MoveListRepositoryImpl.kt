@@ -18,8 +18,6 @@ class MoveListRepositoryImpl @Inject constructor(
     private val dao: PokemonDao
 ) : MoveListRepository {
     override fun getMoveList(): Flow<PagingData<SimpleMove>> {
-//        emit(DataResult.Loading)
-
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
