@@ -2,6 +2,14 @@ package sz.sapphirex.pokedex.data.remote.dto.moves
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import sz.sapphirex.pokedex.data.local.entity.moves.ContestComboDetailEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.ContestComboSetsEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.MoveEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.MoveFlavorTextEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.MoveMetaDataEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.MoveStatChangeEntity
+import sz.sapphirex.pokedex.data.local.entity.moves.PastMoveStatValuesEntity
+import sz.sapphirex.pokedex.data.remote.dto.DtoInterface
 import sz.sapphirex.pokedex.data.remote.dto.pokemon.AbilityEffectChangeDto
 import sz.sapphirex.pokedex.data.remote.dto.utility.APIResourceDto
 import sz.sapphirex.pokedex.data.remote.dto.utility.MachineVersionDetailDto
@@ -42,8 +50,8 @@ data class MoveDto(
     @SerialName("super_contest_effect") val superContestEffect: APIResourceDto,
     val target: NamedAPIResourceDto,
     val type: NamedAPIResourceDto?
-) {
-    fun toBase(): Move {
+): DtoInterface {
+    override fun toBase(): Move {
         return Move(
             id = id,
             name = name,
@@ -71,17 +79,53 @@ data class MoveDto(
             type = type?.toBase()
         )
     }
+
+    override fun toEntity(): MoveEntity {
+        return MoveEntity(
+            id = id,
+            name = name,
+            accuracy = accuracy,
+            effectChance = effectChance,
+            pp = pp,
+            priority = priority,
+            power = power,
+            contestCombos = contestCombos?.toEntity(),
+            contestType = contestType.toEntity(),
+            contestEffect = contestEffect.toEntity(),
+            damageClass = damageClass.toEntity(),
+            effectEntries = effectEntries.map { it.toEntity() },
+            effectChanges = effectChanges.map { it.toEntity() },
+            learnedByPokemon = learnedByPokemon.map { it.toEntity() },
+            flavorTextEntries = flavorTextEntries.map { it.toEntity() },
+            generation = generation.toEntity(),
+            machines = machines.map { it.toEntity() },
+            meta = meta.toEntity(),
+            names = names.map { it.toEntity() },
+            pastValues = pastValues.map { it.toEntity() },
+            statChanges = statChanges.map { it.toEntity() },
+            superContestEffect = superContestEffect.toEntity(),
+            target = target.toEntity(),
+            type = type?.toEntity()
+        )
+    }
 }
 
 @Serializable
 data class ContestComboSetsDto(
     val normal: ContestComboDetailDto,
     @SerialName("super") val superr: ContestComboDetailDto
-) {
-    fun toBase(): ContestComboSets {
+): DtoInterface {
+    override fun toBase(): ContestComboSets {
         return ContestComboSets(
             normal = normal.toBase(),
             superr = superr.toBase()
+        )
+    }
+
+    override fun toEntity(): ContestComboSetsEntity {
+        return ContestComboSetsEntity(
+            normal = normal.toEntity(),
+            superr = superr.toEntity()
         )
     }
 }
@@ -90,11 +134,18 @@ data class ContestComboSetsDto(
 data class ContestComboDetailDto(
     @SerialName("use_before") val useBefore: List<NamedAPIResourceDto>?,
     @SerialName("use_after") val useAfter: List<NamedAPIResourceDto>?
-) {
-    fun toBase(): ContestComboDetail {
+): DtoInterface {
+    override fun toBase(): ContestComboDetail {
         return ContestComboDetail(
             useBefore = useBefore?.map { it.toBase() },
             useAfter = useAfter?.map { it.toBase() }
+        )
+    }
+
+    override fun toEntity(): ContestComboDetailEntity {
+        return ContestComboDetailEntity(
+            useBefore = useBefore?.map { it.toEntity() },
+            useAfter = useAfter?.map { it.toEntity() }
         )
     }
 }
@@ -104,12 +155,20 @@ data class MoveFlavorTextDto(
     @SerialName("flavor_text") val flavorText: String,
     val language: NamedAPIResourceDto,
     @SerialName("version_group") val versionGroup: NamedAPIResourceDto
-) {
-    fun toBase(): MoveFlavorText {
+): DtoInterface {
+    override fun toBase(): MoveFlavorText {
         return MoveFlavorText(
             flavorText = flavorText,
             language = language.toBase(),
             versionGroup = versionGroup.toBase()
+        )
+    }
+
+    override fun toEntity(): MoveFlavorTextEntity {
+        return MoveFlavorTextEntity(
+            flavorText = flavorText,
+            language = language.toEntity(),
+            versionGroup = versionGroup.toEntity()
         )
     }
 }
@@ -128,11 +187,28 @@ data class MoveMetaDataDto(
     @SerialName("ailment_chance") val ailmentChance: Int,
     @SerialName("flinch_chance") val flinchChance: Int,
     @SerialName("stat_chance") val statChance: Int
-) {
-    fun toBase(): MoveMetaData {
+): DtoInterface {
+    override fun toBase(): MoveMetaData {
         return MoveMetaData(
             ailment = ailment.toBase(),
             category = category.toBase(),
+            minHits = minHits,
+            maxHits = maxHits,
+            minTurns = minTurns,
+            maxTurns = maxTurns,
+            drain = drain,
+            healing = healing,
+            critRate = critRate,
+            ailmentChance = ailmentChance,
+            flinchChance = flinchChance,
+            statChance = statChance
+        )
+    }
+
+    override fun toEntity(): MoveMetaDataEntity {
+        return MoveMetaDataEntity(
+            ailment = ailment.toEntity(),
+            category = category.toEntity(),
             minHits = minHits,
             maxHits = maxHits,
             minTurns = minTurns,
@@ -151,11 +227,18 @@ data class MoveMetaDataDto(
 data class MoveStatChangeDto(
     val change: Int,
     val stat: NamedAPIResourceDto
-) {
-    fun toBase(): MoveStatChange {
+): DtoInterface {
+    override fun toBase(): MoveStatChange {
         return MoveStatChange(
             change = change,
             stat = stat.toBase()
+        )
+    }
+
+    override fun toEntity(): MoveStatChangeEntity {
+        return MoveStatChangeEntity(
+            change = change,
+            stat = stat.toEntity()
         )
     }
 }
@@ -169,8 +252,8 @@ data class PastMoveStatValuesDto(
     @SerialName("effect_entries") val effectEntries: List<VerboseEffectDto>,
     val type: NamedAPIResourceDto?,
     @SerialName("version_group") val versionGroup: NamedAPIResourceDto
-) {
-    fun toBase(): PastMoveStatValues {
+): DtoInterface {
+    override fun toBase(): PastMoveStatValues {
         return PastMoveStatValues(
             accuracy = accuracy,
             effectChance = effectChance,
@@ -179,6 +262,18 @@ data class PastMoveStatValuesDto(
             effectEntries = effectEntries.map { it.toBase() },
             type = type?.toBase(),
             versionGroup = versionGroup.toBase()
+        )
+    }
+
+    override fun toEntity(): PastMoveStatValuesEntity {
+        return PastMoveStatValuesEntity(
+            accuracy = accuracy,
+            effectChance = effectChance,
+            power = power,
+            pp = pp,
+            effectEntries = effectEntries.map { it.toEntity() },
+            type = type?.toEntity(),
+            versionGroup = versionGroup.toEntity()
         )
     }
 }
