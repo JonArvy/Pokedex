@@ -1,6 +1,9 @@
 package sz.sapphirex.pokedex.presentation.screens.pokemon
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,9 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.AsyncImage
+import sz.sapphirex.pokedex.R
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
@@ -43,27 +48,6 @@ data class PokemonScreen(
     }
 
     @Composable
-    fun PokemonPage(pokemon: Pokemon) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(.3f),
-            color = pokemon.types.toColor()
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                AsyncImage(
-                    model = pokemon.sprites.frontDefault,
-                    contentDescription = pokemon.name,
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
-    }
-
-    @Composable
     fun PokemonPage(simplePokemon: SimplePokemon) {
         Surface(
             modifier = Modifier
@@ -81,6 +65,41 @@ data class PokemonScreen(
                     modifier = Modifier.fillMaxSize()
                 )
             }
+        }
+    }
+
+    @Composable
+    fun PokemonPage(pokemon: Pokemon) {
+        Log.e("What", "what")
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(.3f),
+            color = pokemon.types.toColor()
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                PokemonPageTopBar(
+                    pokemonName = pokemon.name,
+                    pokemonId = pokemon.id
+                )
+                AsyncImage(
+                    model = pokemon.sprites.frontDefault,
+                    contentDescription = pokemon.name,
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun PokemonPageTopBar(pokemonName: String, pokemonId: Int) {
+        Row {
+            Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
+            Text(text = pokemonName)
+            Text(text = "#$pokemonId")
         }
     }
 }
