@@ -2,11 +2,14 @@ package sz.sapphirex.pokedex.presentation.screens.pokemon
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.AsyncImage
@@ -24,6 +30,7 @@ import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
 import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
 import sz.sapphirex.pokedex.presentation.utils.toColor
+import sz.sapphirex.pokedex.presentation.utils.toNameCase
 
 data class PokemonScreen(
     private val simplePokemon: SimplePokemon
@@ -39,11 +46,12 @@ data class PokemonScreen(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            when (val data = pokemonResult) {
-                is DataResult.Success -> PokemonPage(pokemon = data.data)
-                is DataResult.Error -> Text(text = data.message)
-                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
-            }
+            Log.e("Dem", "Dem")
+//            when (val data = pokemonResult) {
+//                is DataResult.Success -> PokemonPage(pokemon = data.data)
+//                is DataResult.Error -> Text(text = data.message)
+//                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
+//            }
         }
     }
 
@@ -58,6 +66,10 @@ data class PokemonScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                PokemonPageTopBar(
+                    pokemonName = simplePokemon.name,
+                    pokemonId = simplePokemon.id
+                )
                 AsyncImage(
                     model = simplePokemon.sprites.frontDefault,
                     contentDescription = simplePokemon.name,
@@ -70,7 +82,6 @@ data class PokemonScreen(
 
     @Composable
     fun PokemonPage(pokemon: Pokemon) {
-        Log.e("What", "what")
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -96,10 +107,21 @@ data class PokemonScreen(
 
     @Composable
     fun PokemonPageTopBar(pokemonName: String, pokemonId: Int) {
-        Row {
-            Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
-            Text(text = pokemonName)
-            Text(text = "#$pokemonId")
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(
+                onClick = { /*TODO*/ },
+                content = {
+                    Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
+                }
+            )
+            Text(text = pokemonName.toNameCase(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            Text(text = "#$pokemonId", fontWeight = FontWeight.Bold, fontSize = 12.sp)
         }
     }
 }
