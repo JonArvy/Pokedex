@@ -2,14 +2,19 @@ package sz.sapphirex.pokedex.presentation.screens.pokemon
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,15 +57,16 @@ data class PokemonScreen(
                 .fillMaxSize(),
         ) {
             when (val data = pokemonResult) {
-                is DataResult.Success -> PokemonPage(pokemon = data.data)
+                is DataResult.Success -> PokemonScreenContent(pokemon = data.data)
                 is DataResult.Error -> Text(text = data.message)
-                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
+                is DataResult.Loading -> PokemonScreenContent(simplePokemon = simplePokemon)
             }
         }
     }
 
+    // For simple pokemon screen object
     @Composable
-    fun PokemonPage(simplePokemon: SimplePokemon) {
+    fun PokemonScreenContent(simplePokemon: SimplePokemon) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -74,7 +81,7 @@ data class PokemonScreen(
                     pokemonId = simplePokemon.id
                 )
                 AsyncImage(
-                    model = simplePokemon.sprites.frontDefault,
+                    model = simplePokemon.sprites.other?.officialArtwork?.frontDefault,
                     contentDescription = simplePokemon.name,
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier.fillMaxSize()
@@ -83,28 +90,53 @@ data class PokemonScreen(
         }
     }
 
+    // For pokemon screen object
     @Composable
-    fun PokemonPage(pokemon: Pokemon) {
-        Surface(
+    fun PokemonScreenContent(pokemon: Pokemon) {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(.3f),
-            color = pokemon.types.toColor()
+                .fillMaxSize()
+                .background(Color.Gray),
+
+//            color = pokemon.types.toColor()
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                PokemonPageTopBar(
-                    pokemonName = pokemon.name,
-                    pokemonId = pokemon.id
-                )
-                AsyncImage(
-                    model = pokemon.sprites.frontDefault,
-                    contentDescription = pokemon.name,
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier.fillMaxSize()
-                )
+            PokemonPageTopBar(
+                pokemonName = pokemon.name,
+                pokemonId = pokemon.id
+            )
+            Column {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(.35f),
+                    color = Color.Transparent
+                ) {
+
+                }
+                Surface(
+                    modifier = Modifier
+                        .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                        .fillMaxWidth()
+                        .weight(.66f),
+                    color = Color.White,
+                    shape = RoundedCornerShape(16.dp),
+                    shadowElevation = 8.dp,
+                    tonalElevation = 8.dp
+                ) {
+
+                }
             }
+            AsyncImage(
+//                model = pokemon.sprites.frontDefault,
+                model = simplePokemon.sprites.other?.officialArtwork?.frontDefault,
+                contentDescription = pokemon.name,
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier
+                    .fillMaxWidth(.7f)
+                    .aspectRatio(1f)
+                    .align(Alignment.TopCenter)
+                    .padding(top = 48.dp),
+            )
         }
     }
 
@@ -117,15 +149,33 @@ data class PokemonScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(
-                modifier = Modifier.size(48.dp),
-                onClick = { /*TODO*/ },
-                content = {
-                    Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null, modifier = Modifier.size(16.dp))
-                }
-            )
+            Box(
+                modifier = Modifier.width(48.dp)
+            ) {
+                IconButton(
+                    modifier = Modifier.size(48.dp),
+                    onClick = { /*TODO*/ },
+                    content = {
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow_back),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                )
+            }
             Text(text = pokemonName.toNameCase(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
-            Text(text = "#$pokemonId", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            Box(
+                modifier = Modifier.width(48.dp)
+            ) {
+                Text(
+                    text = "#$pokemonId",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(8.dp)
+                )
+
+            }
         }
     }
 }
