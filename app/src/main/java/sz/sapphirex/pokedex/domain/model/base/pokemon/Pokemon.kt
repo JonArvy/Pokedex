@@ -143,7 +143,10 @@ data class PokemonSprites(
     val frontFemale: String?,
     val frontShiny: String?,
     val frontShinyFemale: String?,
+    val other: SpritesOther?,
 ) {
+    /** Will be the first time I'll do this **/
+    /** Using copy of kotlin || Only applicable for complex nested data class || Will need to do lots of cleaning **/
     fun toEntity(): PokemonSpritesEntity {
         return PokemonSpritesEntity(
             backDefault = backDefault,
@@ -153,8 +156,89 @@ data class PokemonSprites(
             frontDefault = frontDefault,
             frontFemale = frontFemale,
             frontShiny = frontShiny,
-            frontShinyFemale = frontShinyFemale
+            frontShinyFemale = frontShinyFemale,
+            other = other?.toEntity()
         )
+    }
+
+    /** Nested Class **/
+    data class SpritesOther(
+        val dreamWorld: SpritesOtherDreamWorld?,
+        val home: SpritesOtherHome?,
+        val officialArtwork: SpritesOtherOfficialArtwork?,
+        val showdown: SpritesOtherShowdown?
+    ) {
+        fun toEntity(): PokemonSpritesEntity.SpritesOtherEntity {
+            return PokemonSpritesEntity.SpritesOtherEntity(
+                dreamWorld = dreamWorld?.toEntity(),
+                home = home?.toEntity(),
+                officialArtwork = officialArtwork?.toEntity(),
+                showdown = showdown?.toEntity(),
+            )
+        }
+        data class SpritesOtherDreamWorld(
+            val frontDefault: String?,
+            val frontFemale: String?
+        ) {
+            fun toEntity(): PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherDreamWorldEntity {
+                return PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherDreamWorldEntity(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale
+                )
+            }
+        }
+
+        data class SpritesOtherHome(
+            val frontDefault: String?,
+            val frontFemale: String?,
+            val frontShiny: String?,
+            val frontShinyFemale: String?
+        ) {
+            fun toEntity(): PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherHomeEntity {
+                return PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherHomeEntity(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale,
+                )
+            }
+        }
+
+        data class SpritesOtherOfficialArtwork(
+            val frontDefault: String?,
+            val frontShiny: String?
+        ) {
+            fun toEntity(): PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherOfficialArtworkEntity {
+                return PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherOfficialArtworkEntity(
+                    frontDefault = frontDefault,
+                    frontShiny = frontShiny
+                )
+            }
+        }
+
+        data class SpritesOtherShowdown(
+            val backDefault: String?,
+            val backFemale: String?,
+            val backShiny: String?,
+            val backShinyFemale: String?,
+            val frontDefault: String?,
+            val frontFemale: String?,
+            val frontShiny: String?,
+            val frontShinyFemale: String?
+        ) {
+            fun toEntity(): PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherShowdownEntity {
+                return PokemonSpritesEntity.SpritesOtherEntity.SpritesOtherShowdownEntity(
+                    backDefault = backDefault,
+                    backFemale = backFemale,
+                    backShiny = backShiny,
+                    backShinyFemale = backShinyFemale,
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale
+                )
+            }
+        }
     }
 }
 
