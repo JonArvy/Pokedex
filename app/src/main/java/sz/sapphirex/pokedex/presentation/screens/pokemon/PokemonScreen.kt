@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,18 +42,19 @@ data class PokemonScreen(
         val pokemonScreenViewModel = getViewModel<PokemonScreenViewModel>()
         val pokemonResult by pokemonScreenViewModel.pokemon.collectAsState()
 
-        pokemonScreenViewModel.getPokemon(simplePokemon.id) // Invoke part
+        LaunchedEffect(Unit) {
+            pokemonScreenViewModel.getPokemon(simplePokemon.id) // Invoke part
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            Log.e("Dem", "Dem")
-//            when (val data = pokemonResult) {
-//                is DataResult.Success -> PokemonPage(pokemon = data.data)
-//                is DataResult.Error -> Text(text = data.message)
-//                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
-//            }
+            when (val data = pokemonResult) {
+                is DataResult.Success -> PokemonPage(pokemon = data.data)
+                is DataResult.Error -> Text(text = data.message)
+                is DataResult.Loading -> PokemonPage(simplePokemon = simplePokemon)
+            }
         }
     }
 
@@ -115,9 +118,10 @@ data class PokemonScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(
+                modifier = Modifier.size(48.dp),
                 onClick = { /*TODO*/ },
                 content = {
-                    Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
+                    Image(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null, modifier = Modifier.size(16.dp))
                 }
             )
             Text(text = pokemonName.toNameCase(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
