@@ -153,6 +153,7 @@ data class PokemonSpritesDto(
     @SerialName("front_female") val frontFemale: String?,
     @SerialName("front_shiny") val frontShiny: String?,
     @SerialName("front_shiny_female") val frontShinyFemale: String?,
+    val other: SpritesOtherDto?,
 ) {
     fun toBase(): PokemonSprites {
         return PokemonSprites(
@@ -163,8 +164,89 @@ data class PokemonSpritesDto(
             frontDefault = frontDefault,
             frontFemale = frontFemale,
             frontShiny = frontShiny,
-            frontShinyFemale = frontShinyFemale
+            frontShinyFemale = frontShinyFemale,
+            other = other?.toBase()
         )
+    }
+    @Serializable
+    data class SpritesOtherDto(
+        @SerialName("dream_world") val dreamWorld: SpritesOtherDreamWorldDto?,
+        val home: SpritesOtherHomeDto?,
+        @SerialName("official-artwork") val officialArtwork: SpritesOtherOfficialArtworkDto?,
+        @SerialName("showdown") val showdown: SpritesOtherShowdownDto?
+    ) {
+        fun toBase(): PokemonSprites.SpritesOther {
+            return PokemonSprites.SpritesOther(
+                dreamWorld = dreamWorld?.toBase(),
+                home = home?.toBase(),
+                officialArtwork = officialArtwork?.toBase(),
+                showdown = showdown?.toBase(),
+            )
+        }
+        @Serializable
+        data class SpritesOtherDreamWorldDto(
+            @SerialName("front_default") val frontDefault: String?,
+            @SerialName("front_female") val frontFemale: String?,
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherDreamWorld {
+                return PokemonSprites.SpritesOther.SpritesOtherDreamWorld(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale
+                )
+            }
+        }
+        @Serializable
+        data class SpritesOtherHomeDto(
+            @SerialName("front_default") val frontDefault: String?,
+            @SerialName("front_female") val frontFemale: String?,
+            @SerialName("front_shiny") val frontShiny: String?,
+            @SerialName("front_shiny_female") val frontShinyFemale: String?,
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherHome {
+                return PokemonSprites.SpritesOther.SpritesOtherHome(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale,
+                )
+            }
+        }
+        @Serializable
+        data class SpritesOtherOfficialArtworkDto(
+            @SerialName("front_default") val frontDefault: String?,
+            @SerialName("front_shiny") val frontShiny: String?,
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherOfficialArtwork {
+                return PokemonSprites.SpritesOther.SpritesOtherOfficialArtwork(
+                    frontDefault = frontDefault,
+                    frontShiny = frontShiny
+                )
+            }
+        }
+        @Serializable
+        data class SpritesOtherShowdownDto(
+            @SerialName("back_default") val backDefault: String?,
+            @SerialName("back_female") val backFemale: String?,
+            @SerialName("back_shiny") val backShiny: String?,
+            @SerialName("back_shiny_female") val backShinyFemale: String?,
+            @SerialName("front_default") val frontDefault: String?,
+            @SerialName("front_female") val frontFemale: String?,
+            @SerialName("front_shiny") val frontShiny: String?,
+            @SerialName("front_shiny_female") val frontShinyFemale: String?,
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherShowdown {
+                return PokemonSprites.SpritesOther.SpritesOtherShowdown(
+                    backDefault = backDefault,
+                    backFemale = backFemale,
+                    backShiny = backShiny,
+                    backShinyFemale = backShinyFemale,
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale
+                )
+            }
+        }
     }
 }
 
