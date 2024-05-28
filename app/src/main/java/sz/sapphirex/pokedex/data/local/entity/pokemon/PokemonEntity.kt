@@ -146,6 +146,7 @@ data class PokemonSpritesEntity(
     val frontFemale: String?,
     val frontShiny: String?,
     val frontShinyFemale: String?,
+    val other: SpritesOtherEntity?,
 ) {
     fun toBase(): PokemonSprites {
         return PokemonSprites(
@@ -156,8 +157,88 @@ data class PokemonSpritesEntity(
             frontDefault = frontDefault,
             frontFemale = frontFemale,
             frontShiny = frontShiny,
-            frontShinyFemale = frontShinyFemale
+            frontShinyFemale = frontShinyFemale,
+            other = other?.toBase(),
         )
+    }
+
+    data class SpritesOtherEntity(
+        val dreamWorld: SpritesOtherDreamWorldEntity?,
+        val home: SpritesOtherHomeEntity?,
+        val officialArtwork: SpritesOtherOfficialArtworkEntity?,
+        val showdown: SpritesOtherShowdownEntity?
+    ) {
+        fun toBase(): PokemonSprites.SpritesOther {
+            return PokemonSprites.SpritesOther(
+                dreamWorld = dreamWorld?.toBase(),
+                home = home?.toBase(),
+                officialArtwork = officialArtwork?.toBase(),
+                showdown = showdown?.toBase(),
+            )
+        }
+        data class SpritesOtherDreamWorldEntity(
+            val frontDefault: String?,
+            val frontFemale: String?
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherDreamWorld {
+                return PokemonSprites.SpritesOther.SpritesOtherDreamWorld(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale
+                )
+            }
+        }
+
+        data class SpritesOtherHomeEntity(
+            val frontDefault: String?,
+            val frontFemale: String?,
+            val frontShiny: String?,
+            val frontShinyFemale: String?
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherHome {
+                return PokemonSprites.SpritesOther.SpritesOtherHome(
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale,
+                )
+            }
+        }
+
+        data class SpritesOtherOfficialArtworkEntity(
+            val frontDefault: String?,
+            val frontShiny: String?
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherOfficialArtwork {
+                return PokemonSprites.SpritesOther.SpritesOtherOfficialArtwork(
+                    frontDefault = frontDefault,
+                    frontShiny = frontShiny
+                )
+            }
+        }
+
+        data class SpritesOtherShowdownEntity(
+            val backDefault: String?,
+            val backFemale: String?,
+            val backShiny: String?,
+            val backShinyFemale: String?,
+            val frontDefault: String?,
+            val frontFemale: String?,
+            val frontShiny: String?,
+            val frontShinyFemale: String?
+        ) {
+            fun toBase(): PokemonSprites.SpritesOther.SpritesOtherShowdown {
+                return PokemonSprites.SpritesOther.SpritesOtherShowdown(
+                    backDefault = backDefault,
+                    backFemale = backFemale,
+                    backShiny = backShiny,
+                    backShinyFemale = backShinyFemale,
+                    frontDefault = frontDefault,
+                    frontFemale = frontFemale,
+                    frontShiny = frontShiny,
+                    frontShinyFemale = frontShinyFemale
+                )
+            }
+        }
     }
 }
 
