@@ -7,15 +7,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.ChipColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,10 +40,16 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.AsyncImage
 import sz.sapphirex.pokedex.R
+import sz.sapphirex.pokedex.domain.model.base.pokemon.Ability
 import sz.sapphirex.pokedex.domain.model.base.pokemon.Pokemon
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonAbility
+import sz.sapphirex.pokedex.domain.model.base.pokemon.PokemonType
 import sz.sapphirex.pokedex.domain.model.simple.pokemon.SimplePokemon
 import sz.sapphirex.pokedex.domain.model.utils.DataResult
+import sz.sapphirex.pokedex.presentation.components.widgets.TypeChip
+import sz.sapphirex.pokedex.presentation.components.widgets.TypeChipBorder
 import sz.sapphirex.pokedex.presentation.utils.toColor
+import sz.sapphirex.pokedex.presentation.utils.toHeightWeightCase
 import sz.sapphirex.pokedex.presentation.utils.toNameCase
 
 data class PokemonScreen(
@@ -111,7 +123,7 @@ data class PokemonScreen(
                         .weight(.35f),
                     color = Color.Transparent
                 ) {
-
+                    
                 }
                 Surface(
                     modifier = Modifier
@@ -123,7 +135,22 @@ data class PokemonScreen(
                     shadowElevation = 8.dp,
                     tonalElevation = 8.dp
                 ) {
-
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        PokemonPageTypeList(pokemon.types)
+                        Text(
+                            text = "About",
+                            color = pokemon.types[0].type.toColor(),
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        PokemonPageAttributes(
+                            pokemonWeight = pokemon.weight,
+                            pokemonHeight = pokemon.height,
+                            pokemonAbilities = pokemon.abilities
+                        )
+                    }
                 }
             }
             AsyncImage(
@@ -174,7 +201,59 @@ data class PokemonScreen(
                     fontSize = 12.sp,
                     modifier = Modifier.padding(8.dp)
                 )
+            }
+        }
+    }
+    @Composable
+    fun PokemonPageTypeList(pokemonTypes: List<PokemonType>) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            pokemonTypes.forEachIndexed { index, pokemonType ->
+                TypeChip(
+                    color = pokemonType.type.toColor(),
+                    label = { Text(
+                        text = pokemonType.type.name.toNameCase(),
+                        color = MaterialTheme.colorScheme.surface,
+                        fontWeight = FontWeight.Bold,
+                    )},
+                    border = TypeChipBorder.borderless()
+                )
+                if (index < pokemonTypes.size - 1) {
+                    Spacer(Modifier.width(16.dp))
+                }
+            }
+        }
+    }
 
+    @Composable
+    fun PokemonPageAttributes(pokemonWeight: Int, pokemonHeight: Int, pokemonAbilities: List<PokemonAbility>) {
+        Row(
+            Modifier
+            .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Column {
+                Row {
+                    Icon(painter = painterResource(id = R.drawable.weight), contentDescription = "weight")
+                    Text((pokemonWeight / 10.0).toHeightWeightCase())
+                }
+                Text(text = "Weight")
+            }
+            Column {
+                Row {
+                    Icon(painter = painterResource(id = R.drawable.straighten), contentDescription = "height")
+                    Text((pokemonHeight / 10.0).toHeightWeightCase())
+                }
+                Text(text = "Height")
+            }
+            Column {
+                pokemonAbilities.forEach { pokemonAbility ->
+                    Text(text = pokemonAbility.ability.name)
+                }
+                Text(text = "Moves")
             }
         }
     }
