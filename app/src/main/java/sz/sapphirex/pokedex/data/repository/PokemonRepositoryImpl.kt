@@ -31,6 +31,8 @@ class PokemonRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 emit(DataResult.Error(e, e.message.toString()))
             }
+        } else {
+            emit(DataResult.Success(cachePokemon.toBase()))
         }
     }
 }
