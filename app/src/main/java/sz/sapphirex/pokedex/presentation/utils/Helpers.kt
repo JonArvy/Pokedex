@@ -44,3 +44,10 @@ fun String.toNameCase(): String {
         it.replaceFirstChar(Char::titlecase)
     }
 }
+fun Double.toDecimalString(stepCount: Int = 1): String {
+    return (this * stepCount).toString()
+}
+
+fun Double.toHeightWeightCase(stepCount: Int = 1): String {
+    return this.toDecimalString(stepCount).replace(".", ",")
+}
