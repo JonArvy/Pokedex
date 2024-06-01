@@ -14,7 +14,7 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPokemon(pokemon: PokemonEntity)
 
-    @Query("SELECT * FROM pokemon WHERE name = :id")
+    @Query("SELECT * FROM pokemon WHERE id = :id")
     suspend fun getPokemon(id: Int): PokemonEntity?
 
     @Query("SELECT * FROM pokemon WHERE name = :name")
@@ -26,7 +26,7 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMove(move: MoveEntity)
 
-    @Query("SELECT * FROM move WHERE name = :id")
+    @Query("SELECT * FROM move WHERE id = :id")
     suspend fun getMove(id: Int): MoveEntity?
 
     @Query("SELECT * FROM move WHERE name = :name")
@@ -38,7 +38,7 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon WHERE name IN(:nameList)")
     suspend fun getPokemonListByName(nameList: List<String>): List<PokemonEntity>
 
-    @Query("SELECT * FROM pokemon WHERE name IN(:idList)")
+    @Query("SELECT * FROM pokemon WHERE id IN(:idList)")
     suspend fun getPokemonListById(idList: List<Int>): List<PokemonEntity>
 
     /** Named **/
